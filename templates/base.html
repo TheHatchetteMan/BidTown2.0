@@ -3,11 +3,12 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="static/normalize.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato|Galada">
 	<title>BASE</title>
 </head>
 <body>
-
-	<p>I should be at the very edge of the view port</p>
-
+	{% block content %}
+        <!-- Page content will be placed here by whatever view inherits from this template -->
+	{% endblock %}
 </body>
 </html>
