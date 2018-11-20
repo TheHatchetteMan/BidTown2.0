@@ -8,4 +8,4 @@ from flask import Flask
 ###################################################################################################
 
 app = Flask(__name__)  # create flask object. object has underlying configuration capabilities.
-app.secret_key = 'autobuddy_session_key'  # set a key for session cookie signing.
+app.secret_key = 'bidtown_session_key'  # set a key for session cookie signing.
