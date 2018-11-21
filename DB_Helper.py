@@ -33,10 +33,7 @@ def read_mysql_config(filepath):
 
 class DB_Helper():
 
-    #static variables go here. no need to declare static. Anything here is always static AKA shared with all objects.
-    #connection_info = read_mysql_config(filepath)
-    #print(connection_info)
-
+    #static variables go here.
 
     def __init__(self, prep_stmt=False): #attrib=None means default value is none if arg is not passed in
         '''
@@ -81,21 +78,8 @@ class DB_Helper():
                 print("Connection information:\n")
                 self.display_connection_info()
 
-    def commit(self):
-        self.connection.commit()
-
     def disconnect(self, commit=True):
+        """if you want to commit, just override commit=False in the method call. Otherwise """
         if commit:
             self.connection.commit()
         self.connection.close()
-
-db = DB_Helper()
-
-cursor = db.connection.cursor()
-
-cursor.execute("SELECT FirstName FROM Users;")
-
-for each in cursor:
-    print(each[0])
-
-db.disconnect()
