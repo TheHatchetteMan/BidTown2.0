@@ -1,12 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode
 
-#  provide the correct file path to the database connection configuration file
-#filepath = r'C:\\Users\\etwit\\Documents\\USC FALL 18\\CSCI 521\\repository\\mysqlconnection.txt'
-#filepath = '/home/edwin/Documents/projects/ab_db_cnxn.txt' # chris uncomment this
-filepath = r'C:\\Users\\Terrell\\Documents\\GitHub\\autobuddy_official\\mysqlconnection.txt' # Terrell uncomment this
-#filepath = r'C:\\Users\\bryan\\OneDrive\\Documents\\GitHub\\autobuddy_official\\mysqlconnection.txt'
-#filepath = r'C:\\Users\\etwit\\Documents\\USC FALL 18\\CSCI 521\\repository\\mysqlconnection.txt' #erin uncomment this
+filepath = "/home/edwin/Documents/Software_Engineering/BidTown/db_cnxn"
 
 def read_mysql_config(filepath):
     '''
@@ -57,7 +52,6 @@ class DB_Helper():
         self.connection_dictionary = read_mysql_config(filepath)
         self.connection_string = None  # used for displaying current connection information
         self.connection = self.connect()
-        # self.query_cursor = self.connection.cursor(prepared=prep_stmt)
 
 
     #show current connection configuration
@@ -94,3 +88,14 @@ class DB_Helper():
         if commit:
             self.connection.commit()
         self.connection.close()
+
+db = DB_Helper()
+
+cursor = db.connection.cursor()
+
+cursor.execute("SELECT FirstName FROM Users;")
+
+for each in cursor:
+    print(each[0])
+
+db.disconnect()
