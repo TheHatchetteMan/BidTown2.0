@@ -14,7 +14,19 @@ def base():
 def HomePage():
     return render_template('HomePage.html')
 
-	
+#------------------------------------- CREATE ACCOUNT -------------------------------------#
+@app.route('/')
+@app.route('/HomePage')
+@app.route('/CreateAccount')
+def CreateAccount():
+	return render_template('AccountCreation.html')
+
+#------------------------------------- Login -----------------------------------#
+@app.route('/')
+@app.route('/HomePage')
+@app.route('/Login')
+def Login():
+	return render_template('LoginForm.html')
 
 #------------------------------------ Test Page----------------------------------#
 @app.route("/single-item")  # testing
@@ -31,7 +43,7 @@ def view_single_item():
     item_data = {}
 
     for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
-        item_data['item'] = [ItemID, UserID, ClassID, Name.decode(), Image_Url, Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date]
+        item_data['item'] = [ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date]
 
     db.disconnect(commit=True)
     return render_template("ItemForm.html", item_data=item_data)
