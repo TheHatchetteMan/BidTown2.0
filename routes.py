@@ -7,6 +7,16 @@ from DB_Helper import DB_Helper
 @app.route("/")
 def base():
     return render_template("base.html")
+	
+#------------------------------------- HOME -------------------------------------#
+@app.route('/')
+@app.route('/HomePage')
+def HomePage():
+    return render_template('HomePage.html')
+
+	
+
+#------------------------------------ Test Page----------------------------------#
 
 @app.route("/single-item")  # testing
 def view_single_item():
