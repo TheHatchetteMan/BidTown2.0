@@ -1,6 +1,8 @@
 <!-- Developer: Hunter Hatchette
      Accomplished: Create an item form -->
 
+{% extends "base.html" %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +12,7 @@
 <body>
 
     <h1 style="color:blue;">{{ item_data['item'][3] }}</h1><br>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Eastern_Bluebird-27527-2.jpg"
+    <img src="{{item_data['item'][4]}}"
          width="50%" height="50%"><img><br>
     <p>Current Bid: ${{item_data['item'][6]}}</p>
 
@@ -29,3 +31,4 @@
 
 </body>
 </html>
+{% endblock %}
