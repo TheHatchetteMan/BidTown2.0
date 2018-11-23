@@ -17,7 +17,6 @@ def HomePage():
 	
 
 #------------------------------------ Test Page----------------------------------#
-
 @app.route("/single-item")  # testing
 def view_single_item():
     db = DB_Helper()
@@ -42,11 +41,12 @@ def place_bid():
     if request.method == 'POST' and (request.form != None) or len(request.form) != 0:
         bid = request.form['bid']
         Item_ID = request.form['item-id']
+        expected_bidcount = request.form['expected-bidcount']
 
         db = DB_Helper()
         sql = ("UPDATE Item "
                "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1 "
-               "WHERE ItemID = ?"
+               f"WHERE ItemID = ? AND Bid_Count = {expected_bidcount}"
                )
 
         update = db.connection.cursor(prepared=True)
