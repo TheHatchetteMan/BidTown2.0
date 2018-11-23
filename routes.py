@@ -1,5 +1,5 @@
 from app_config import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, url_for, flash
 from DB_Helper import DB_Helper
 
 # @app.context_processor  # use this for loading base.html layout with common elements among views
@@ -51,18 +51,27 @@ def view_single_item():
 @app.route("/place-bid", methods=['POST'])
 def place_bid():
     if request.method == 'POST' and (request.form != None) or len(request.form) != 0:
-        bid = request.form['bid']
+        db = DB_Helper()
+
+        bid_increment = request.form['bid']
         Item_ID = request.form['item-id']
         expected_bidcount = request.form['expected-bidcount']
 
-        db = DB_Helper()
+        cursor = db.connection.cursor()
+        cursor.execute(f"SELECT Bid_Count FROM Item WHERE ItemID={Item_ID}")
+        current_bidcount = -1
+        for (Bid_Count) in cursor:
+            current_bidcount = Bid_Count
+        bid_behind = expected_bidcount != current_bidcount
+
         sql = ("UPDATE Item "
                "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1 "
-               f"WHERE ItemID = ? AND Bid_Count = {expected_bidcount}"
-               )
-
+               f"WHERE ItemID = ? AND Bid_Count = ? "
+               "AND Current_Bid < (Current_Bid + ?) "
+               )  # check bid count at database level
+        # cursor.close()
         update = db.connection.cursor(prepared=True)
-        update.execute(sql, (bid, Item_ID,))
+        update.execute(sql, (bid_increment, Item_ID, expected_bidcount, bid_increment,))
         db.disconnect()
         return redirect("/single-item")
     return "Error"
