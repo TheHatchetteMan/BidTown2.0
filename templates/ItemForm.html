@@ -13,20 +13,18 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Eastern_Bluebird-27527-2.jpg"
      width="50%" height="50%"><img><br>
 <p>Current Bid: $0</p>
+
 <form action="/place-bid" method="post">
     <h4>Please place a bid:</h4><br>
-    <input type="radio" name="bid" value="1" checked>$1<br>
+    <input type="radio" name="bid" value="1" checked>$1<br> <!-- convert this to an unordered list -->
     <input type="radio" name="bid" value="5"> $5<br>
     <input type="radio" name="bid" value="10"> $10<br>
     <input type="radio" name="bid" value="50"> $50<br>
     <input type="radio" name="bid" value="100"> $100<br>
     <br><br>
+    <input type="hidden" name="item-id" value="{{item_data['item'][0]}}"> <!-- security: exposes primary key on browser -->
     <input type="submit" value="Submit">
 </form>
-
-{% for x in item_data['item'] %}
-    {{ x }}
-{% endfor %}
 
 </body>
 </html>

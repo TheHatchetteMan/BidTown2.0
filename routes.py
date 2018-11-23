@@ -23,7 +23,7 @@ def view_single_item():
     db = DB_Helper()
     sql = ("SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date " \
           "FROM Item")
-    no_data = ()
+    no_data = ()  # for prepared statement functionality
     cursor = db.connection.cursor(prepared=True)
     cursor.execute(sql, no_data)
 
@@ -39,5 +39,6 @@ def view_single_item():
 
 @app.route("/place-bid", methods=['POST'])
 def place_bid():
-    if request.form == 'POST':
-        pass
+    # if request.method == 'POST':
+    #     request.form[]
+    pass
