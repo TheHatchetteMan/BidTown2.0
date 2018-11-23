@@ -1,5 +1,5 @@
 from app_config import app
-from flask import render_template, request
+from flask import render_template, request, redirect
 from DB_Helper import DB_Helper
 
 # @app.context_processor  # use this for loading base.html layout with common elements among views
@@ -35,10 +35,22 @@ def view_single_item():
         item_data['item'] = [ItemID, UserID, ClassID, Name.decode(), Image_Url, Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date]
 
     db.disconnect(commit=True)
-    return render_template("/ItemForm.html", item_data=item_data)
+    return render_template("ItemForm.html", item_data=item_data)
 
 @app.route("/place-bid", methods=['POST'])
 def place_bid():
-    # if request.method == 'POST':
-    #     request.form[]
-    pass
+    if request.method == 'POST' and (request.form != None) or len(request.form) != 0:
+        bid = request.form['bid']
+        Item_ID = request.form['item-id']
+
+        db = DB_Helper()
+        sql = ("UPDATE Item "
+               "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1 "
+               "WHERE ItemID = ?"
+               )
+
+        update = db.connection.cursor(prepared=True)
+        update.execute(sql, (bid, Item_ID,))
+        db.disconnect()
+        return redirect("/single-item")
+    return "Error"
