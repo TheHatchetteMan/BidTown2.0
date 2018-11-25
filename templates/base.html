@@ -5,24 +5,20 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="static/normalize.css">
+	<link rel="stylesheet" type="text/css" href="static/style.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato|Galada">
 	<title>BASE</title>
 </head>
-<body>
-	
-	</div> 
-	<style>
-	
-		body{background-color: powderblue;}
-	</style>
-	
-	 <div class="topnav">
-          <a class="active" href="/HomePage">BidTown</a>
+<header>
+	<div class="topnav">
+	  <a class="active" href="/HomePage">BidTown</a>
 	  <a class="active" href="/HomePage">Browse</a>
 	  <a href="/HomePage">Ending Soon</a>
 	  <a href="/HomePage">Top Sellers</a>
 	  <a href="/CreateAccount">Account</a>
-	  </div>
+  	</div>
+</header>
+<body>
 	{% block content %}
         <!-- Page content will be placed here by whatever view inherits from this template -->
 	{% endblock %}
