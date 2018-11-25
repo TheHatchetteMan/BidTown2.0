@@ -112,30 +112,31 @@ def filter():
 
         return render_template('Browse.html', item_list=item_list['item'], ClassType=Class)
 
+@app.route("/filterbird", methods=['POST'])
 def filter_Bird():
     if request.method == "POST":
 
-        flightint = request.form['flight']
-        carniverousint = request.form['carniverous']
-        feathersint = request.form['feathers']
-        swimint = request.form['swim']
+        flight = 0
+        carn = 0
+        feather = 0
+        swim = 0
 
-        if flightint:
-            flightint =1
-        if carniverousint:
-            carniverousint=1
-        if feathersint:
-            feathersint=1
-        if swimint:
-            swimint=1
+        if request.form['Flight'] is not None:
+            flight = 1
+        if request.form['Carniverous'] is not None:
+            carn = 1
+        if request.form['Feathers'] is not None:
+            feather = 1
+        if request.form['Swim'] is not None:
+            swim = 1
 
         db = DB_Helper()
         sql = ('SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, '
                'I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType, '
                'BI.ClassID, BI.flight, BI.carniverous, BI.feathers, BI.swim '
                'FROM Item I, Class C, Bird BI'
-               'WHERE bi.classtype = "bird" AND bi.flight =flightInt AND bi.carniverous = carniverousint'
-               'AND bi.feathers = feathersInt AND bi.swim = swimint'
+               'WHERE bi.classtype = "Bird" AND bi.flight = flight AND bi.carniverous = carn'
+               'AND bi.feathers = feather AND bi.swim = swim'
                'AND bi.classID = C.classID '
                'AND c.itemID= i,itemID')
 
@@ -146,13 +147,13 @@ def filter_Bird():
 
         results = cursor.fetchall()
 
-        item_list = {}
-        item_list['item'] = []
+        bird_list = {}
+        bird_list['bird'] = []
 
         for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID,
              ClassType) in results:
-            item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count,
+            bird_list['bird'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count,
             Start_Date, End_Date, ClassID, ClassType.decode()])
 
         db.disconnect()
-        return render_template('Browse.html', item_list=item_list['item'])
+        return render_template('Browse.html', bird_list=bird_list['bird'])
