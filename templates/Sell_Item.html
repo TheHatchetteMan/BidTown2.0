@@ -2,18 +2,10 @@
 
 {% extends "base.html" %}
 {% block content %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sell Item</title>
-</head>
-<body>
     <h1>Sell</h1>
 
     <form action="/Register-Item" method="post">
-	<ul style="list-style-type:none">
+	<ul>
         <h4>List a Pet For Sale:</h4>
         Name:<br>
         <input type="text" name="name">
@@ -45,6 +37,4 @@
         <input type="submit" value="Submit">
     </ul>
     </form>
-</body>
-</html>
 {% endblock %}
