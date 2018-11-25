@@ -51,6 +51,30 @@ def EndingSoon():
 def Sell_Item():
     return render_template('Sell_Item.html')
 
+@app.route('/Register-Item', methods=['POST'])
+def Register_Item():
+    if request.method == 'POST' and (request.form != None) or len(request.form) != 0:
+        name = request.form['name']
+        url = request.form['url;']
+        start_bid = request.form['start_bid']
+        description = request.form['description']
+        weight = request.form['weight']
+        age = request.form['age']
+        type = request.form['type']
+
+        if type == 'Bird':
+            ClassID = 1
+        elif type == 'Bug':
+            ClassID = 2
+        elif type == 'mammal':
+            ClassID = 3
+        elif type == 'reptile':
+            ClassID = 4
+
+        db = DB_Helper()
+        sql = ("INSERT INTO Item"
+               "(")
+
 #------------------------------------ Top Sellers -----------------------------------------#
 @app.route('/TopSellers')
 def TopSellers():
