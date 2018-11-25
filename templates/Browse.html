@@ -28,25 +28,25 @@
 
   </form>
          {% if ClassType == "Bird" %}
-          <form action="/filter" method="POST">
+          <form action="/filterbird" method="POST">
               <p>Narrow Down Search Results By Checking Class Attributes</p>
-              <li>Flight: <input type="checkbox" id="Flight" >
-                  Carniverous: <input type="checkbox" id="Carniverous" >
-                  Feathers: <input type="checkbox" id="Feathers" >
-                  Swim: <input type="checkbox" id="Swim" >
+
+              <li>Flight: <input type="checkbox" name="Flight"  value="Flight" >
+                  Carniverous: <input type="checkbox" name="Carniverous" value ="Carniverous" >
+                  Feathers: <input type="checkbox" name="Feathers" value = "Feathers">
+                  Swim: <input type="checkbox" name ="Swim" value = "Swim" >
                   <input type="submit">
+
               </li>
-
-
           </form>
+                 {% for item in item_list %}
+                   <h1 style="color:blue;">{{ item[3] }}</h1><br>
+                   <img src="{{item[4]}}"
+                   width="15%" height="25%"><img><br>
+                   <p>Current Bid: ${{item[6]}}</p>
+                 {% endfor %}
          {% endif %}
 
-         {% for item in item_list %}
-           <h1 style="color:blue;">{{ item[3] }}</h1><br>
-		   <img src="{{item[4]}}"
-           width="15%" height="25%"><img><br>
-		   <p>Current Bid: ${{item[6]}}</p>
-	     {% endfor %}
 
 
 {% endblock %}
