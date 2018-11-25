@@ -7,6 +7,10 @@ class BidManager:
     def __init__(self):
         self.item = {'expected-bidcount': None, 'expected-bid': None}
 
+    def clear_item(self):
+        self.item['expected-bid'] = None
+        self.item['expected-bidcount'] = None
+
     def place_bid(self):  # must be called after view_item(id)
         db = DB_Helper()
 
@@ -41,10 +45,10 @@ class BidManager:
             update.execute(sql, (bid_increment, item_id, expected_bidcount,))
             db.disconnect()
 
-            self.item['expected-bid'] = None
-            self.item['expected-bidcount'] = None
+            self.clear_item()
             return redirect("/single-item/{id}".format(id=item_id))
 
+        self.clear_item()
         db.disconnect()
         return redirect("/single-item/{id}".format(id=item_id))
                                                                                                                
