@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+	.jumbotron {
+			padding-top: 10px;
+			padding-bottom: 20px;
+			color: #2f2f2f;
+			background-color: #1897e0;
+			margin-bottom: 0px;
+		}
+</style>
+
+	<title>BidTown Search Page</title>
+	<div class="jumbotron">
+		<h1 class="col-lg text-center">BidTown<small>&ensp;Search for Exotic Animals Here!</small></h1>
+	</div>
+
+ <form action="/filter" method="POST">
+        <h4>Filter your Results</h4>
+        <p>Choose Animal Class Type</p>
+        <select name="Class" size="1">
+          <option value="Bird">Bird</option>
+          <option value="Bug">Bug</option>
+          <option value="Mammal">Mammal</option>
+          <option value="Reptile">Reptile</option>
+        </select>
+         <input type="submit">
+
+  </form>
+         {% if ClassType == "Bird" %}
+          <p> hi </p>
+         {% endif %}
+
+         {% for item in item_list %}
+           <h1 style="color:blue;">{{ item[3] }}</h1><br>
+		   <img src="{{item[4]}}"
+           width="15%" height="25%"><img><br>
+		   <p>Current Bid: ${{item[6]}}</p>
+	     {% endfor %}
+
+
+{% endblock %}

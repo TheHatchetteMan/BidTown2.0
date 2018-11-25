@@ -7,14 +7,14 @@ from DB_Helper import DB_Helper
 @app.route("/")
 def base():
 	return render_template("base.html")
-	
+
 #------------------------------------- HOME -------------------------------------#
 @app.route('/')
 @app.route('/HomePage')
 def view_popular_item():
     db = DB_Helper()
     sql = ('SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date '
-           'FROM Item ORDER BY Bid_Count LIMIT 10')
+           'FROM Item ORDER BY Bid_Count DESC LIMIT 10')
 
     empty_tuple = ()
 
@@ -83,3 +83,35 @@ def place_bid():
 		db.disconnect()
 		return redirect("/single-item")
 	return "Error"
+#------------------------------------ Browse ----------------------------------#
+@app.route("/browse")
+def search():
+    return render_template('Browse.html')
+
+@app.route("/filter", methods=['POST'])
+def filter():
+    if request.method == "POST":
+        Class = request.form['Class']
+        db = DB_Helper()
+        sql = ('SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, '
+               'I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType '
+               'FROM Item I, Class C '
+               f'WHERE C.ClassType = "{Class}" '
+               'AND  I.ClassID = C.ClassID ')
+
+        empty_tuple = ()
+
+        cursor = db.connection.cursor(prepared=True)
+        cursor.execute(sql, empty_tuple)
+
+        results = cursor.fetchall()
+
+        item_list = {}
+        item_list['item'] = []
+
+        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID, ClassType) in results:
+            item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode()])
+
+        db.disconnect()
+
+        return render_template('Browse.html', item_list=item_list['item'], ClassType=Class)
