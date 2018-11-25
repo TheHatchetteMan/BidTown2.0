@@ -8,7 +8,7 @@ from DB_Helper import DB_Helper
 def base():
 	return render_template("base.html")
 
-#------------------------------------- HOME -------------------------------------#
+#------------------------------------- HOME ----------------------------------------------#
 @app.route('/HomePage')
 def view_popular_item():
     db = DB_Helper()
@@ -36,12 +36,22 @@ def view_popular_item():
 def CreateAccount():
 	return render_template('AccountCreation.html')
 
-#------------------------------------- Login -----------------------------------#
+#------------------------------------- Login ----------------------------------------------#
 @app.route('/Login')
 def Login():
 	return render_template('LoginForm.html')
 
-#------------------------------------ Test Page----------------------------------#
+#------------------------------------ Ending Soon -----------------------------------------#
+@app.route('/EndingSoon')
+def EndingSoon():
+    return render_template('EndingSoon.html')
+
+#------------------------------------ Top Sellers -----------------------------------------#
+@app.route('/TopSellers')
+def TopSellers():
+    return render_template('TopSellers.html')
+
+#------------------------------------ Test Page--------------------------------------------#
 @app.route("/single-item")  # testing
 def view_single_item():
 	db = DB_Helper()
