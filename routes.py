@@ -9,7 +9,6 @@ def base():
 	return render_template("base.html")
 	
 #------------------------------------- HOME -------------------------------------#
-@app.route('/')
 @app.route('/HomePage')
 def view_popular_item():
     db = DB_Helper()
@@ -31,16 +30,13 @@ def view_popular_item():
 
     db.disconnect()
     return render_template("HomePage.html", item_list=item_list)
+
 #------------------------------------- CREATE ACCOUNT -------------------------------------#
-@app.route('/')
-@app.route('/HomePage')
 @app.route('/CreateAccount')
 def CreateAccount():
 	return render_template('AccountCreation.html')
 
 #------------------------------------- Login -----------------------------------#
-@app.route('/')
-@app.route('/HomePage')
 @app.route('/Login')
 def Login():
 	return render_template('LoginForm.html')
