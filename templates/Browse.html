@@ -28,7 +28,17 @@
 
   </form>
          {% if ClassType == "Bird" %}
-          <p> hi </p>
+          <form action="/filter" method="POST">
+              <p>Narrow Down Search Results By Checking Class Attributes</p>
+              <li>Flight: <input type="checkbox" id="Flight" >
+                  Carniverous: <input type="checkbox" id="Carniverous" >
+                  Feathers: <input type="checkbox" id="Feathers" >
+                  Swim: <input type="checkbox" id="Swim" >
+                  <input type="submit">
+              </li>
+
+
+          </form>
          {% endif %}
 
          {% for item in item_list %}
