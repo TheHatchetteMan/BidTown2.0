@@ -1,48 +1,78 @@
-from flask import request
+from flask import request, render_template, redirect
 from DB_Helper import DB_Helper
 
 class BidManager:
     #static/shared data
 
     def __init__(self):
-        self.single_item_result = []
+        self.item = {'expected-bidcount': None, 'expected-bid': None}
 
-
-    def place_bid(self):
+    def place_bid(self):  # must be called after view_item(id)
         db = DB_Helper()
 
         # data
         bid_increment = float(request.form['bid'])
-        Item_ID = request.form['item-id']
-        expected_bidcount = int(request.form['expected-bidcount'])
-        expected_bid_total = float(request.form['expected-bid']) + bid_increment
+        item_id = request.form['item-id']
+        expected_bidcount = self.item['expected-bidcount']
+        expected_bid_total = float(self.item['expected-bid']) + bid_increment
 
         # check that bid expectation is what will actually happen AKA recheck for actual bid and bid count match
         cursor = db.connection.cursor()
-        cursor.execute(f"SELECT Current_Bid, Bid_Count FROM Item WHERE ItemID={Item_ID}")
+        cursor.execute(f"SELECT Current_Bid, Bid_Count FROM Item WHERE ItemID={item_id}")
         actual_bidcount = -1
         actual_current_bid = bid_increment
         for (Current_Bid, Bid_Count) in cursor:
             actual_bidcount = Bid_Count
             actual_current_bid = float(Current_Bid)
         cursor.close()
-
         actual_bid_total = actual_current_bid + bid_increment
 
-        meets_count = expected_bidcount == actual_bidcount  # is the user behind in their attempt to bid
-        meets_expected_bid = expected_bid_total == actual_bid_total  # does the user's expected bid match what will be updated
+        # is the user behind in their attempt to bid
+        # if the user updates their bid, will the resulting bid amount be what they were expecting
+        meets_expectation = (expected_bidcount == actual_bidcount) and (expected_bid_total == actual_bid_total)
 
-        if meets_count and meets_expected_bid:
+        if meets_expectation:
             sql = ("UPDATE Item "
                    "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1 "
                    f"WHERE ItemID = ? AND Bid_Count = {actual_bidcount} "
                    "AND Current_Bid < (Current_Bid + ?) "  # adding negative & zero amounts
                    )  # check bid count at database level
-            # cursor.close()
             update = db.connection.cursor(prepared=True)
-            update.execute(sql, (bid_increment, Item_ID, expected_bidcount,))
+            update.execute(sql, (bid_increment, item_id, expected_bidcount,))
             db.disconnect()
-            return "You should be redirected to the newly updated bid data that shows the winning bid is you!"
+
+            self.item['expected-bid'] = None
+            self.item['expected-bidcount'] = None
+            return redirect("/single-item/{id}".format(id=item_id))
 
         db.disconnect()
-        return "Your bid data is outdated. You need to be redirected to the new bid data for this item."
+        return redirect("/single-item/{id}".format(id=item_id))
+                                                                                                               
+    def view_item(self, id):  # must be called before place_bid()
+        db = DB_Helper()
+        sql = ("SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date "
+               "FROM Item "
+               "WHERE ItemID=?")
+        data = (id,)  # for prepared statement functionality. not sure if this is required.
+        cursor = db.connection.cursor(prepared=True)
+        cursor.execute(sql, data)
+
+        results = cursor.fetchall()
+
+        item_data = {}
+
+        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
+            item_data['item'] = [ItemID, UserID, ClassID,
+                                 Name.decode(),
+                                 Image_Url.decode(),
+                                 Status,
+                                 Current_Bid.decode(),
+                                 Bid_Count,
+                                 Start_Date,
+                                 End_Date]
+
+        self.item['expected-bidcount'] = item_data['item'][7]
+        self.item['expected-bid'] = item_data['item'][6]
+
+        db.disconnect(commit=True)
+        return render_template("ItemForm.html", item_data=item_data)
