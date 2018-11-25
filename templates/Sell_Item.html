@@ -1,0 +1,41 @@
+<!--    Developer: Hunter Hatchette -->
+
+{% extends "base.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sell Item</title>
+</head>
+<body>
+    <h1>Sell</h1>
+
+    <form action="/Register-Item" method="post">
+	<ul style="list-style-type:none">
+        <h4>List an Item For Sale:</h4>
+        Name:<br>
+        <input type="text" name="name">
+        <br>
+        URL: (please paste the URL of your image)<br>
+        <input type="url" name="url">
+        <br>
+        Starting Bid: (specify the price you want it to start at)<br>
+        <input type="number" name="start_bid">
+        <br>
+        Description: (Please describe the item for buyers)<br>
+        <input type="text" name="description">
+        <br>
+        Weight:<br>
+        <input type="number" name="weight">
+        <br>
+        Age:<br>
+        <input type="number" name="age">
+        <br><br>
+        <input type="submit" value="Submit">
+    </ul>
+    </form>
+</body>
+</html>
+{% endblock %}

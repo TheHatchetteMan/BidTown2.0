@@ -46,6 +46,11 @@ def Login():
 def EndingSoon():
     return render_template('EndingSoon.html')
 
+#------------------------------------- Sell Item ------------------------------------------#
+@app.route('/SellItem')
+def Sell_Item():
+    return render_template('Sell_Item.html')
+
 #------------------------------------ Top Sellers -----------------------------------------#
 @app.route('/TopSellers')
 def TopSellers():
