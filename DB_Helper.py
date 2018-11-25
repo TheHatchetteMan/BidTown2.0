@@ -3,7 +3,8 @@ from mysql.connector import errorcode
 
 #filepath = "/home/edwin/Documents/Software_Engineering/BidTown/db_cnxn"
 #filepath = r'C:\Users\etwit\Documents\USC FALL 18\CSCI 540\BidTown\BidTown\mysqlconnection.txt.txt' #erin uncomment this
-filepath = r'C:\Users\Hunter\Documents\mysqlconnection.txt'
+filepath = r'C:\Users\Hunter\BidTown\mysqlconnection.txt.txt'
+
 def read_mysql_config(filepath):
     '''
     INPUT: file path pointing to mysql connection information, type: string
