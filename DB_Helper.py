@@ -31,7 +31,6 @@ def read_mysql_config(filepath):
 
     return connection_info
 
-
 class DB_Helper():
 
     #static variables go here.
