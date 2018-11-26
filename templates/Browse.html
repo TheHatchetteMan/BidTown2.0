@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+<title>{% block title %}Browse{% endblock %}</title>
 {% block content %}
 <style>
 .jumbotron {
@@ -9,8 +10,6 @@ background-color: #1897e0;
 margin-bottom: 0px;
 }
 </style>
-
-<title>BidTown Search Page</title>
 <div class="jumbotron">
     <h1 class="col-lg text-center">BidTown<small>&ensp;Search for Exotic Animals Here!</small></h1>
 </div>
@@ -34,12 +33,11 @@ margin-bottom: 0px;
 
 {% if ClassType is not none %}
 <div class="filter-feature">
-    <!-- HANDLES THE BIRD -->
 <label for="attributes">attributes:</label>
 <form class="filter-by-attributes" id="attributes"action="/filterbird" method="post">
     {% for x in range(2, attributes|length) %}
-    <label for="{{attributes[x]}}">{{attributes[x]}}</label>
-    <input type="checkbox" id="{{attributes[x]}}" name="{{attributes[x]}}"  value="{{attributes[x]}}"/>
+    <label for="{{ attributes[x] }}">{{ attributes[x] }}</label>
+    <input type="checkbox" id="{{ attributes[x] }}" name="{{ attributes[x] }}"  value="{{ attributes[x] }}"/>
     {% endfor %}
 
 
@@ -54,18 +52,12 @@ margin-bottom: 0px;
         <br>
         <li>
             <p>{{ item[3] }}</p>
-            <img src="{{item[4]}}" width="15%" height="15%"/>
-            <p>Current Bid: ${{item[6]}}</p>
+            <img src="{{ item[4] }}" width="15%" height="15%"/>
+            <p>Current Bid: ${{ item[6] }}</p>
         </li>
     {% endfor %}
     </ol>
 
-<!--{% for bird in bird_list %}-->
-<!--<h1 style="color:blue;">{{ bird[3] }}</h1><br>-->
-<!--<img src="{{bird[4]}}"-->
-<!--width="15%" height="25%"><img><br>-->
-<!--<p>Current Bid: ${{bird[6]}}</p>-->
-<!--{% endfor %}-->
 </div> <!-- end filter-feature div -->
 {% endif %}
 
