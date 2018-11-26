@@ -1,59 +1,75 @@
 {% extends "base.html" %}
 {% block content %}
 <style>
-	.jumbotron {
-			padding-top: 10px;
-			padding-bottom: 20px;
-			color: #2f2f2f;
-			background-color: #1897e0;
-			margin-bottom: 0px;
-		}
+.jumbotron {
+padding-top: 10px;
+padding-bottom: 20px;
+color: #2f2f2f;
+background-color: #1897e0;
+margin-bottom: 0px;
+}
 </style>
 
-	<title>BidTown Search Page</title>
-	<div class="jumbotron">
-		<h1 class="col-lg text-center">BidTown<small>&ensp;Search for Exotic Animals Here!</small></h1>
-	</div>
+<title>BidTown Search Page</title>
+<div class="jumbotron">
+    <h1 class="col-lg text-center">BidTown<small>&ensp;Search for Exotic Animals Here!</small></h1>
+</div>
 
- <form action="/filter" method="POST">
-        <h4>Filter your Results</h4>
-        <p>Choose Animal Class Type</p>
-        <select name="Class" size="1">
-          <option value="Bird">Bird</option>
-          <option value="Bug">Bug</option>
-          <option value="Mammal">Mammal</option>
-          <option value="Reptile">Reptile</option>
-        </select>
-         <input type="submit">
+<div class="filter-feature">
+<form class="filter-by-class" action="/filter" method="POST">
+    <h4>Filter your Results</h4>
+    <p></p>
+    <!--<label for="Class">Choose an animal type</label><br/>-->
+    <select id="Class" name="Class" size="1">
+        <option value="Bird">Bird</option>
+        <option value="Bug">Bug</option>
+        <option value="Mammal">Mammal</option>
+        <option value="Reptile">Reptile</option>
+    </select>
+    <input class="submit-button" type="submit" value="Narrow Search">
+</form>
+</div>
 
-  </form>
+<br/>
 
-         {% if ClassType == "Bird" %}
-          <form action="/filterbird" method="POST">
-              <p>Narrow Down Search Results By Checking Class Attributes</p>
+<div class="filter-feature">
+{% if ClassType == "Bird" %}
+<label for="attributes">attributes:</label>
+<form id="attributes"action="/filterbird" method="post">
+    <label for="Flight">Flight</label>
+    <input type="checkbox" id="Flight" name="Flight"  value="Flight"/>
+    <label for="Carniverous">Carniverous</label>
+    <input type="checkbox" id="Carniverous" name="Carniverous" value="Carniverous"/>
+    <label for="Feathers">Feathers</label>
+    <input type="checkbox" id="Feathers" name="Feathers" value="Feathers"/>
+    <label for="Swim">Swim</label>
+    <input type="checkbox" id="Swim" name="Swim" value="Swim"/>
 
-              <li>Flight: <input type="checkbox" name="Flight"  value="Flight" >
-                  Carniverous: <input type="checkbox" name="Carniverous" value ="Carniverous" >
-                  Feathers: <input type="checkbox" name="Feathers" value = "Feathers" >
-                  Swim: <input type="checkbox" name ="Swim" value = "Swim" >
-                   <input type="submit">
+    <input class="submit-button" type="submit" value="Filter by Attribute"/>
 
-                  {% for item in item_list %}
-                   <h1 style="color:blue;">{{ item[3] }}</h1><br>
-                   <img src="{{item[4]}}"
-                   width="15%" height="25%"><img><br>
-                   <p>Current Bid: ${{item[6]}}</p>
-                 {% endfor %}
-              </li>
-          </form>
-                 {% for bird in bird_list %}
-                   <h1 style="color:blue;">{{ bird[3] }}</h1><br>
-                   <img src="{{bird[4]}}"
-                   width="15%" height="25%"><img><br>
-                   <p>Current Bid: ${{bird[6]}}</p>
-                 {% endfor %}
-         {% endif %}
+    {% for item in item_list %}
+    <br>
+    <br>
+    <label for="browse-class-results">Results:</label>
+    <br>
+    <ol id="browse-class-results">
+        <li>
+            <p>{{ item[3] }}</p>
+            <img src="{{item[4]}}" width="15%" height="15%"/>
+            <p>Current Bid: ${{item[6]}}</p>
+        </li>
+    </ol>
+    {% endfor %}
 
+</form>
+{% for bird in bird_list %}
+<h1 style="color:blue;">{{ bird[3] }}</h1><br>
+<img src="{{bird[4]}}"
+width="15%" height="25%"><img><br>
+<p>Current Bid: ${{bird[6]}}</p>
+{% endfor %}
+{% endif %}
+</div>
 
 
 {% endblock %}
