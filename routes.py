@@ -120,7 +120,7 @@ def filter():
         results = cursor.fetchall()
 
         column_name_list = []
-        for (x,) in results:  # including the comma here tells python to load individual variables not entire tuple. its complicated
+        for (x,) in results:  # including the comma here tells python to load individual variables not entire tuple into x. its complicated
             column_name_list.append(x.decode())
         db.disconnect()
 
