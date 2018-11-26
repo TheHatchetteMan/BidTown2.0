@@ -34,10 +34,10 @@ margin-bottom: 0px;
 {% if ClassType is not none %}
 <div class="filter-feature">
 <label for="attributes">attributes:</label>
-<form class="filter-by-attributes" id="attributes"action="/filterbird" method="post">
+<form class="filter-by-attributes" id="attributes"action="/filterbird" method="get">
     {% for x in range(2, attributes|length) %}
     <label for="{{ attributes[x] }}">{{ attributes[x] }}</label>
-    <input type="checkbox" id="{{ attributes[x] }}" name="{{ attributes[x] }}"  value="{{ attributes[x] }}"/>
+    <input type="checkbox" id="{{ attributes[x] }}" name="{{ attributes[x] }}"  value="1"/>
     {% endfor %}
 
 
@@ -47,8 +47,8 @@ margin-bottom: 0px;
 
     <br>
     <div class="filter-results">
-    <label for="filter-by-class">Results:</label>
-    <ol id="filter-by-class">
+    <label for="filter-results-by-class">Results:</label>
+    <ol id="filter-results-by-class">
     {% for item in item_list %}
         <br>
         <li>
