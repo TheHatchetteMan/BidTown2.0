@@ -108,9 +108,23 @@ def filter():
         for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID, ClassType) in results:
             item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode()])
 
+        cursor.close()  # clear cursor but keep db connection
+
+        # new query: get class attributes for the given class ()
+        sql = ("SELECT COLUMN_NAME "
+               "FROM INFORMATION_SCHEMA.COLUMNS "
+               "WHERE TABLE_SCHEMA = 'BidTown' AND TABLE_NAME = ?;")
+        cursor = db.connection.cursor(prepared=True)  # new cursor object
+        table_name = (Class,)
+        cursor.execute(sql, table_name)
+        results = cursor.fetchall()
+
+        column_name_list = []
+        for (x,) in results:  # including the comma here tells python to load individual variables not entire tuple. its complicated
+            column_name_list.append(x.decode())
         db.disconnect()
 
-        return render_template('Browse.html', item_list=item_list['item'], ClassType=Class)
+        return render_template('Browse.html', item_list=item_list['item'], ClassType=Class, attributes=column_name_list)
 
 @app.route("/filterbird", methods=['POST'])
 def filter_Bird():
