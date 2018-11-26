@@ -15,15 +15,15 @@ margin-bottom: 0px;
 </div>
 
 <div class="filter-feature">
-<form class="filter-by-class" action="/filter" method="POST">
+<form class="filter-by-class" action="/filter" method="get">
     <h4>Filter your Results</h4>
     <p></p>
     <!--<label for="Class">Choose an animal type</label><br/>-->
     <select id="Class" name="Class" size="1">
-        <option value="Bird">Bird</option>
-        <option value="Bug">Bug</option>
-        <option value="Mammal">Mammal</option>
-        <option value="Reptile">Reptile</option>
+        <option value="Bird" {%if ClassType == "Bird"%}selected="selected"{%endif%}>Bird</option>
+        <option value="Bug" {%if ClassType == "Bug"%}selected="selected"{%endif%}>Bug</option>
+        <option value="Mammal" {%if ClassType == "Mammal"%}selected="selected"{%endif%}>Mammal</option>
+        <option value="Reptile" {%if ClassType == "Reptile"%}selected="selected"{%endif%}>Reptile</option>
     </select>
     <input class="submit-button" type="submit" value="Narrow Search">
 </form>
@@ -46,6 +46,7 @@ margin-bottom: 0px;
     <br>
 
     <br>
+    <div class="filter-results">
     <label for="filter-by-class">Results:</label>
     <ol id="filter-by-class">
     {% for item in item_list %}
@@ -57,10 +58,8 @@ margin-bottom: 0px;
         </li>
     {% endfor %}
     </ol>
+    </div>
 
 </div> <!-- end filter-feature div -->
 {% endif %}
-
-
-
 {% endblock %}

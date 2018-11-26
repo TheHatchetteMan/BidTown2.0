@@ -84,10 +84,10 @@ def place_bid():
 def search():
     return render_template('Browse.html')
 
-@app.route("/filter", methods=['POST'])
+@app.route("/filter", methods=['GET'])
 def filter():
-    if request.method == "POST":
-        Class = request.form['Class']
+    if request.method == "GET":
+        Class = request.args['Class']
         db = DB_Helper()
         sql = ('SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, '
                'I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType '
@@ -120,7 +120,7 @@ def filter():
         results = cursor.fetchall()
 
         column_name_list = []
-        for (x,) in results:  # including the comma here tells python to load individual variables not entire tuple into x. its complicated
+        for (x,) in results:  # including comma tells python to load individual variables not entire tuple to x.
             column_name_list.append(x.decode())
         db.disconnect()
 
