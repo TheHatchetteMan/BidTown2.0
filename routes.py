@@ -121,26 +121,24 @@ def filter_Bird():
         feather = 0
         swim = 0
 
-        if request.form['Flight'] is not None:
+        if request.form['Flight'] is 'Flight':
             flight = 1
-        if request.form['Carniverous'] is not None:
+        if request.form['Carniverous'] is 'Carniverous':
             carn = 1
-        if request.form['Feathers'] is not None:
+        if request.form['Feathers'] is 'Feathers':
             feather = 1
-        if request.form['Swim'] is not None:
+        if request.form['Swim'] is 'Swim':
             swim = 1
 
         db = DB_Helper()
         sql = ('SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, '
                'I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType, '
-               'BI.ClassID, BI.flight, BI.carniverous, BI.feathers, BI.swim '
-               'FROM Item I, Class C, Bird BI'
-               'WHERE bi.classtype = "Bird" AND bi.flight = flight AND bi.carniverous = carn'
-               'AND bi.feathers = feather AND bi.swim = swim'
-               'AND bi.classID = C.classID '
-               'AND c.itemID= i,itemID')
+               'FROM Item I, Class C, Bird BI '
+               'WHERE I.ClassID = C.ClassID AND C.ClassID = BI.ClassID '
+               'AND BI.Flight = flight AND BI.Carniverous = carn '
+               'AND BI.Feathers = feather AND BI.Swim = swim ')
 
-        empty_tuple = ()
+        empty = ()
 
         cursor = db.connection.cursor(prepared=True)
         cursor.execute(sql, empty_tuple)
