@@ -1,30 +1,37 @@
 <!-- Developer: Hunter Hatchette
      Accomplished: Create an item form -->
+<!-- Developer: Chris Torok
+     Created item display templating -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ItemForm</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+{% if item_data|length != 0 %}
+    <h1 style="color:blue;">{{ item_data['item'][3] }}</h1><br>
+    <img src="{{item_data['item'][4]}}"
+         width="50%" height="50%"><img><br>
+    <p>Current Bid: ${{item_data['item'][6]}}</p>
 
-<h1 style="color:blue;">{{ item_data['item'][3] }}</h1><br>
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Eastern_Bluebird-27527-2.jpg"
-     width="50%" height="50%"><img><br>
-<p>Current Bid: $0</p>
-
-<form action="/place-bid" method="post">
-    <h4>Please place a bid:</h4><br>
-    <input type="radio" name="bid" value="1" checked>$1<br> <!-- convert this to an unordered list -->
-    <input type="radio" name="bid" value="5"> $5<br>
-    <input type="radio" name="bid" value="10"> $10<br>
-    <input type="radio" name="bid" value="50"> $50<br>
-    <input type="radio" name="bid" value="100"> $100<br>
-    <br><br>
-    <input type="hidden" name="item-id" value="{{item_data['item'][0]}}"> <!-- security: exposes primary key on browser -->
-    <input type="submit" value="Submit">
-</form>
-
-</body>
-</html>
+    <form action="/place-bid" method="post">
+	<ul style="list-style-type:none">
+        <h4>Please place a bid:</h4>
+<<<<<<< Login
+<<<<<<< Login
+=======
+>>>>>>> duplicate menu deletion
+        <li><input type="radio" name="bid" value="1" checked>$1 </li>
+        <li><input type="radio" name="bid" value="5"> $5 </li>
+        <li><input type="radio" name="bid" value="10"> $10 </li>
+        <li><input type="radio" name="bid" value="50"> $50 </li>
+        <li><input type="radio" name="bid" value="100"> $100 </li>
+        <input type="hidden" name="expected-bidcount" value="{{item_data['item'][7]}}">
+<<<<<<< Login
+>>>>>>> Address Bid count conflict between two bids
+=======
+>>>>>>> duplicate menu deletion
+        <input type="hidden" name="item-id" value="{{item_data['item'][0]}}"> <!-- security: exposes primary key on browser -->
+        <input type="submit" value="Submit">
+    </form>
+{% else %}
+    <p>The item doesn't exist</p>
+{% endif %}
+{% endblock %}

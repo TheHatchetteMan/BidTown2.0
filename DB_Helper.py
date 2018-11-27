@@ -2,7 +2,7 @@ import mysql.connector
 from mysql.connector import errorcode
 
 #filepath = "/home/edwin/Documents/Software_Engineering/BidTown/db_cnxn"
-filepath = r'C:\Users\etwit\Documents\USC FALL 18\CSCI 540\BidTown\mysqlconnection.txt' #erin uncomment this
+filepath = r'C:\Users\etwit\Documents\USC FALL 18\CSCI 540\BidTown\BidTown\mysqlconnection.txt.txt' #erin uncomment this
 
 def read_mysql_config(filepath):
     '''
@@ -30,7 +30,6 @@ def read_mysql_config(filepath):
     #print(connection_info)
 
     return connection_info
-
 
 class DB_Helper():
 
