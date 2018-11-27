@@ -34,10 +34,11 @@ margin-bottom: 0px;
 {% if ClassType is not none %}
 <div class="filter-feature">
 <label for="attributes">attributes:</label>
-<form class="filter-by-attributes" id="attributes"action="/filterbird" method="get">
+<form class="filter-by-attributes" id="attributes"action="/filter" method="get">
+    <input type="hidden" id="{{ClassType}}" name="Class" value="{{ClassType}}">
     {% for x in range(2, attributes|length) %}
     <label for="{{ attributes[x] }}">{{ attributes[x] }}</label>
-    <input type="checkbox" id="{{ attributes[x] }}" name="{{ attributes[x] }}"  value="1"/>
+    <input type="checkbox" id="{{ attributes[x] }}" name="{{ x-2 }}"  value="{{attributes[x]}}"/>
     {% endfor %}
 
 
