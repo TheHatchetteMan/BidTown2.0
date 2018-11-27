@@ -52,11 +52,13 @@ margin-bottom: 0px;
     <ol id="filter-results-by-class">
     {% for item in item_list %}
         <br>
-        <li>
+        <a href="/">
+            <li>
             <p>{{ item[3] }}</p>
             <img src="{{ item[4] }}" width="15%" height="15%"/>
             <p>Current Bid: ${{ item[6] }}</p>
-        </li>
+            </li>
+        </a>
     {% endfor %}
     </ol>
     </div>

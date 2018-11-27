@@ -42,14 +42,18 @@ def Login():
 	return render_template('LoginForm.html')
 
 #------------------------------------ Test Page----------------------------------#
-@app.route("/single-item")  # testing
-def view_single_item():
+@app.route("/item/<int:id>")  # testing
+def view_single_item(id=None):
+    if id == 0 or id is None:
+        return "no item"
+
     db = DB_Helper()
     sql = ("SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date " \
-          "FROM Item")
-    no_data = ()  # for prepared statement functionality
+          "FROM Item "
+           "WHERE ItemID = ? ")
+    id = (id,)  # for prepared statement functionality
     cursor = db.connection.cursor(prepared=True)
-    cursor.execute(sql, no_data)
+    cursor.execute(sql, id)
 
     results = cursor.fetchall()
 
@@ -90,9 +94,7 @@ def filter():
     Class = request.args['Class']
 
     item_list = {'item': []}
-
     attributes = []
-    checked = []
 
     if request.method == "GET" and request.args['Class'] is not None:
         sql = ('SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, '
@@ -109,7 +111,7 @@ def filter():
         results = cursor.fetchall()
 
         for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID, ClassType) in results:
-            item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode()])
+            item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status.decode(), Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode()])
 
         cursor.close()  # clear cursor but keep db connection
 
@@ -127,14 +129,17 @@ def filter():
         cursor.close()
 
     if len(request.args) > 1:
-        for x in range(1, len(request.args)):
-            if request.args.get(str(x)) is not None:
+        checked = []
+
+        for x in range(0, len(attributes)):
+            if str(x) in request.args:
                 checked.append(request.args[str(x)])
-        attr_name = []
+
+        # attr_name = []
         attr_str = ""
         for each in checked:
-            attr_name.append(each.split()[0])
-            attr_str = attr_str + f"AND CT.{attr_name}=1"
+            # attr_name.append(each)
+            attr_str = attr_str + f"AND CT.{each}=1 "
 
         no_data = ()
 

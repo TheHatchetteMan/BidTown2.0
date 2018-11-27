@@ -1,16 +1,11 @@
 <!-- Developer: Hunter Hatchette
      Accomplished: Create an item form -->
+<!-- Developer: Chris Torok
+     Created item display templating -->
 
 {% extends "base.html" %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ItemForm</title>
-</head>
-<body>
-
+{% if item_data|length != 0 %}
     <h1 style="color:blue;">{{ item_data['item'][3] }}</h1><br>
     <img src="{{item_data['item'][4]}}"
          width="50%" height="50%"><img><br>
@@ -36,7 +31,7 @@
         <input type="hidden" name="item-id" value="{{item_data['item'][0]}}"> <!-- security: exposes primary key on browser -->
         <input type="submit" value="Submit">
     </form>
-
-</body>
-</html>
+{% else %}
+    <p>The item doesn't exist</p>
+{% endif %}
 {% endblock %}
