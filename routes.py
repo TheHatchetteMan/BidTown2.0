@@ -86,9 +86,15 @@ def search():
 
 @app.route("/filter", methods=['GET'])
 def filter():
-    if request.method == "GET":
-        Class = request.args['Class']
-        db = DB_Helper()
+    db = DB_Helper()
+    Class = request.args['Class']
+
+    item_list = {'item': []}
+
+    attributes = []
+    checked = []
+
+    if request.method == "GET" and request.args['Class'] is not None:
         sql = ('SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, '
                'I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType '
                'FROM Item I, Class C '
@@ -101,9 +107,6 @@ def filter():
         cursor.execute(sql, empty_tuple)
 
         results = cursor.fetchall()
-
-        item_list = {}
-        item_list['item'] = []
 
         for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID, ClassType) in results:
             item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode()])
@@ -119,53 +122,38 @@ def filter():
         cursor.execute(sql, table_name)
         results = cursor.fetchall()
 
-        column_name_list = []
         for (x,) in results:  # including comma tells python to load individual variables not entire tuple to x.
-            column_name_list.append(x.decode())
-        db.disconnect()
+            attributes.append(x.decode())
+        cursor.close()
 
-        return render_template('Browse.html', item_list=item_list['item'], ClassType=Class, attributes=column_name_list)
+    if len(request.args) > 1:
+        for x in range(1, len(request.args)):
+            if request.args.get(str(x)) is not None:
+                checked.append(request.args[str(x)])
+        attr_name = []
+        attr_str = ""
+        for each in checked:
+            attr_name.append(each.split()[0])
+            attr_str = attr_str + f"AND CT.{attr_name}=1"
 
-@app.route("/filterbird", methods=['POST'])
-def filter_Bird():
-    if request.method == "POST":
+        no_data = ()
 
-        flight = 0
-        carn = 0
-        feather = 0
-        swim = 0
-
-        if request.form['Flight'] is 'Flight':
-            flight = 1
-        if request.form['Carniverous'] is 'Carniverous':
-            carn = 1
-        if request.form['Feathers'] is 'Feathers':
-            feather = 1
-        if request.form['Swim'] is 'Swim':
-            swim = 1
-
-        db = DB_Helper()
-        sql = ('SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, '
-               'I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType, '
-               'FROM Item I, Class C, Bird BI '
-               'WHERE I.ClassID = C.ClassID AND C.ClassID = BI.ClassID '
-               'AND BI.Flight = flight AND BI.Carniverous = carn '
-               'AND BI.Feathers = feather AND BI.Swim = swim ')
-
-        empty = ()
+        sql = ("SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, "
+               "I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType "
+               f"FROM Item I, Class C, {Class} CT "
+               f"WHERE C.ClassType = '{Class}' "
+               "AND  I.ClassID = C.ClassID AND C.ClassID=CT.ClassID "
+               f"{attr_str}")
 
         cursor = db.connection.cursor(prepared=True)
-        cursor.execute(sql, empty_tuple)
-
+        cursor.execute(sql, no_data)
         results = cursor.fetchall()
 
-        bird_list = {}
-        bird_list['bird'] = []
+        item_list['item'] = []
 
-        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID,
-             ClassType) in results:
-            bird_list['bird'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count,
-            Start_Date, End_Date, ClassID, ClassType.decode()])
+        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID, ClassType) in results:
+            item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode()])
 
-        db.disconnect()
-        return render_template('Browse.html', bird_list=bird_list['bird'])
+    db.disconnect()
+    return render_template('Browse.html', item_list=item_list['item'], ClassType=Class, attributes=attributes)
+
