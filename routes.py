@@ -101,7 +101,7 @@ def filter():
                'I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType '
                'FROM Item I, Class C '
                f'WHERE C.ClassType = "{Class}" '
-               'AND  I.ClassID = C.ClassID ')
+               'AND  I.Status = "For_Sale" AND I.ClassID = C.ClassID ')
 
         empty_tuple = ()
 
@@ -147,7 +147,7 @@ def filter():
                "I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType "
                f"FROM Item I, Class C, {Class} CT "
                f"WHERE C.ClassType = '{Class}' "
-               "AND  I.ClassID = C.ClassID AND C.ClassID=CT.ClassID "
+               "AND I.Status = 'For_Sale' AND I.ClassID = C.ClassID AND C.ClassID=CT.ClassID "
                f"{attr_str}")
 
         cursor = db.connection.cursor(prepared=True)
