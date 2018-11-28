@@ -11,6 +11,14 @@
 	<div class="topnav">
 	  <a class="active" href="/HomePage">BidTown</a>
 	  <a href="/browse">Browse</a>
+
+	{% if userLog %}
+		<p> Logout </p>
+	{% elif not userLog %}
+		<a href="/Login">Login Soon</a>
+	{% endif %}
+
+
 <body>
 	
 	</div> 
@@ -29,6 +37,7 @@
 </header>
 <body>
 	{% block content %}
+
         <!-- Page content will be placed here by whatever view inherits from this template -->
 	{% endblock %}
 </body>

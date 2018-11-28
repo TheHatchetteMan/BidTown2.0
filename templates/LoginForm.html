@@ -10,7 +10,7 @@
 
 <h2>Please Login:</h2>
 <br>
-<form action = "/setcookie" method = "POST">
+<form action = "/Login" method = "POST">
     E-mail:<br>
     <input type="email" name="email">
     <br>
@@ -19,6 +19,10 @@
     <br><br>
     <input type="submit" value="Submit">
 </form>
+
+{% if not Logged_In %}
+<p> Logged in Failed Try Again or Create an Account! :)</p>
+{% endif %}
 
 </body>
 </html>

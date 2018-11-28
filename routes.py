@@ -1,8 +1,19 @@
 from app_config import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session
 from DB_Helper import DB_Helper
 
-# @app.context_processor  # use this for loading base.html layout with common elements among views
+@app.context_processor
+def show_logged_in():
+    session
+    logged_in = None
+
+    if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
+        logged_in = True
+    else:
+        logged_in = False
+
+    return dict(userLog=logged_in)
+
 
 @app.route("/")
 def base():
@@ -162,3 +173,53 @@ def filter():
     db.disconnect()
     return render_template('Browse.html', item_list=item_list['item'], ClassType=Class, attributes=attributes)
 
+#------------------------------------ Account ----------------------------------#
+@app.route("/Account")
+def login():
+    return render_template("LoginForm.html")
+
+
+@app.route('/Login', methods=['POST', 'GET'])
+def authenticate():
+    user_exists = False
+    if request.method == 'POST':
+        userEmail = request.form['email']
+        userPassword = request.form['password']
+        user_exist_list = {'user': []}
+
+        db = DB_Helper()
+        sql = (f'SELECT UserID, "{userEmail}", "{userPassword}", FirstName, LastName, Location, Type '
+               'FROM Users '
+               f'WHERE Users.email = "{userEmail}" AND Users.password = "{userPassword}"')
+
+        empty_tuple = ()
+
+        cursor = db.connection.cursor(prepared=True)
+        cursor.execute(sql, empty_tuple)
+        results = cursor.fetchall()
+
+        user_exist_list['user'] = []
+
+        userInt = 0
+        for (UserID , email, password, FirstName, LastName, Location, Type ) in results:
+            user_exist_list['user'].append(
+                [UserID, email.decode(), password.decode(), FirstName.decode(), LastName.decode(),
+                 Location.decode(), Type])
+
+
+        db.disconnect()
+
+        userInt = len(user_exist_list['user'])
+
+
+
+        if userInt == 1:
+            user_exists = True
+            session['bidtown_session_key'] = user_exist_list['user']
+            return redirect('/HomePage')
+            # return str(user_exists)
+        else:
+            return render_template("LoginForm.html", Logged_In = user_exists)
+            # return str(user_exists)
+
+    return render_template('LoginForm.html', user_exists = user_exists)
