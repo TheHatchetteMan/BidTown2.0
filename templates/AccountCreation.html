@@ -1,5 +1,10 @@
+
+{% extends "base.html" %}
+{% block content %}
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Account Creation</title>
@@ -10,7 +15,7 @@
 <br>
 <h4>Pay attention to whether you wish to become a buyer or seller!</h4>
 <br>
-<form action="/LoginForm">
+<form action="/LoginForm" method = "POST">
     E-mail:<br>
     <input type="email" name="email">
     <br>
@@ -40,3 +45,4 @@ will be created.</P>
 
 </body>
 </html>
+{% endblock %}

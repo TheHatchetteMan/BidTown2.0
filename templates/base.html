@@ -1,18 +1,22 @@
-<!-- Developer: Hunter Hatchette
-     Accomplished: Create base html -->
-
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html>
+ <body style="background-color:powderblue;">
 <head>
 	<link rel="stylesheet" type="text/css" href="static/normalize.css">
+	<link rel="stylesheet" type="text/css" href="static/style.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato|Galada">
-	<title>BASE</title>
+	<title></title>
 </head>
+<header>
+	<div class="topnav">
+	  <a class="active" href="/HomePage">BidTown</a>
+	  <a href="/browse">Browse</a>
+	  <a href="/HomePage">Ending Soon</a>
+	  <a href="/HomePage">Top Sellers</a>
+	  <a href="/CreateAccount">Account</a>
+  	</div>
+</header>
 <body>
-	<style>
-		body{background-color: powderblue;}
-	</style>
 	{% block content %}
         <!-- Page content will be placed here by whatever view inherits from this template -->
 	{% endblock %}

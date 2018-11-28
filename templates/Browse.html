@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+<title>{% block title %}Browse{% endblock %}</title>
+{% block content %}
+<style>
+.jumbotron {
+padding-top: 10px;
+padding-bottom: 20px;
+color: #2f2f2f;
+background-color: #1897e0;
+margin-bottom: 0px;
+}
+</style>
+<div class="jumbotron">
+    <h1 class="col-lg text-center">BidTown<small>&ensp;Search for Exotic Animals Here!</small></h1>
+</div>
+
+<div class="filter-feature">
+<form class="filter-by-class" action="/filter" method="get">
+    <h4>Filter your Results</h4>
+    <p></p>
+    <!--<label for="Class">Choose an animal type</label><br/>-->
+    <select id="Class" name="Class" size="1">
+        <option value="Bird" {%if ClassType == "Bird"%}selected="selected"{%endif%}>Bird</option>
+        <option value="Bug" {%if ClassType == "Bug"%}selected="selected"{%endif%}>Bug</option>
+        <option value="Mammal" {%if ClassType == "Mammal"%}selected="selected"{%endif%}>Mammal</option>
+        <option value="Reptile" {%if ClassType == "Reptile"%}selected="selected"{%endif%}>Reptile</option>
+    </select>
+    <input class="submit-button" type="submit" value="Narrow Search">
+</form>
+</div>
+
+<br/>
+
+{% if ClassType is not none %}
+<div class="filter-feature">
+<label for="attributes">attributes:</label>
+<form class="filter-by-attributes" id="attributes"action="/filter" method="get">
+    <input type="hidden" id="{{ClassType}}" name="Class" value="{{ClassType}}">
+    {% for x in range(2, attributes|length) %}
+    <label for="{{ attributes[x] }}">{{ attributes[x] }}</label>
+    <input type="checkbox" id="{{ attributes[x] }}" name="{{ x-2 }}"  value="{{attributes[x]}}"/>
+    {% endfor %}
+
+
+    <input class="submit-button" type="submit" value="Filter by Attribute"/>
+</form> <!-- end filter-by-attributes form-->
+    <br>
+
+    <br>
+    <div class="filter-results">
+    <label for="filter-results-by-class">Results:</label>
+    <ol id="filter-results-by-class">
+    {% for item in item_list %}
+        <br>
+        <a href="/">
+            <li>
+            <p>{{ item[3] }}</p>
+            <img src="{{ item[4] }}" width="15%" height="15%"/>
+            <p>Current Bid: ${{ item[6] }}</p>
+            </li>
+        </a>
+    {% endfor %}
+    </ol>
+    </div>
+
+</div> <!-- end filter-feature div -->
+{% endif %}
+{% endblock %}

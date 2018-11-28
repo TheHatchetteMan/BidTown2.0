@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +10,7 @@
 
 <h2>Please Login:</h2>
 <br>
-<form action="">
+<form action = "/setcookie" method = "POST">
     E-mail:<br>
     <input type="email" name="email">
     <br>
@@ -20,3 +22,4 @@
 
 </body>
 </html>
+{% endblock %}
