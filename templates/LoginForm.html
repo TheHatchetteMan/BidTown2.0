@@ -1,29 +1,63 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {% block content %}
-<html lang="en">
+<style>
+.login
+     {
+        display: inline-block;
+        background-color: #878745;
+        height: 225px;
+        width: 225px;
+        border: 5px solid #061306;
+        border-radius: 8px;
+     }
+     input[type=submit]
+     {
+        border-radius: 5px;
+        border: 0;
+        width: 50px;
+        height:25px;
+        font-family: Tahoma;
+        background: #f4f4f4;
+     }
+    input[type=submit]:Hover
+    {
+        border-radius: 5px;
+        border: 3px solid #000000;
+        width: 60px;
+        height:30px;
+        font-family: Tahoma;
+        background: #f4f4f4;
+    }
+ </style>
+<ot L lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
+
 <body>
-
-<h2>Please Login:</h2>
-<br>
-<form action = "/Login" method = "POST">
-    E-mail:<br>
-    <input type="email" name="email">
-    <br>
-    Password:<br>
-    <input type="password" name="password">
-    <br><br>
-    <input type="submit" value="Submit">
-</form>
-
 {% if not Logged_In %}
-<p> Logged in Failed Try Again or Create an Account! :)</p>
-{% endif %}
+         <div class="row">
+             <div class="col-md-5" align="center">
+             </div>
+             <div class="container login">
+                 <div class="col-md-2" align="center">
+                    <h2> Login</h2>
+                    <form action = "/Login" method = "POST">
+                        E-mail:<br>
+                        <input type="email" name="email">
+                        <br>
+                        Password:<br>
+                        <input type="password" name="password">
+                        <br><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                 </div>
+             </div>
+         </div>
 
+{% endif %}
 </body>
 </html>
 {% endblock %}

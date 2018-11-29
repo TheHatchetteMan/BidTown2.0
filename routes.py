@@ -42,10 +42,6 @@ def view_popular_item():
     db.disconnect()
     return render_template("HomePage.html", item_list=item_list)
 
-#------------------------------------- CREATE ACCOUNT -------------------------------------#
-@app.route('/CreateAccount')
-def CreateAccount():
-	return render_template('AccountCreation.html')
 
 #------------------------------------- Login ----------------------------------------------#
 @app.route('/Login')
@@ -178,7 +174,6 @@ def filter():
 def login():
     return render_template("LoginForm.html")
 
-
 @app.route('/Login', methods=['POST', 'GET'])
 def authenticate():
     user_exists = False
@@ -223,3 +218,29 @@ def authenticate():
             # return str(user_exists)
 
     return render_template('LoginForm.html', user_exists = user_exists)
+#------------------------------------- CREATE ACCOUNT -------------------------------------#
+@app.route('/CreateAccount', methods=['POST', 'GET'])
+def CreateAccount():
+    if session['bidtown_session_key'] is not None:
+        return redirect('/HomePage')
+    if request.method == 'POST':
+        userEmail = request.form['email']
+        userPassword = request.form['password']
+        userFirstName = request.form['FirstName']
+        userLastName = request.form['LastName']
+        userLocation = request.form['Location']
+        userType = request.form['type']
+
+        db = DB_Helper()
+        sql = ('INSERT INTO Users(Email, Password, FirstName, LastName, Location, Type) '
+               'VALUES(?, ?, ?, ?, ?, ? )')
+
+        #empty_tuple = ()
+
+        cursor = db.connection.cursor(prepared=True)
+        cursor.execute(sql, (userEmail, userPassword, userFirstName, userLastName, userLocation, userType, ))
+
+        db.disconnect()
+
+        return redirect('/Login')
+    return render_template('AccountCreation.html')
