@@ -6,13 +6,13 @@
 {% extends "base.html" %}
 {% block content %}
 {% if item_data|length != 0 %}
-    <h1 style="color:blue;">{{ item_data['item'][3] }}</h1><br>
+    <h1>{{ item_data['item'][3] }}</h1><br>
     <img src="{{item_data['item'][4]}}"
          width="50%" height="50%"><img><br>
     <p>Current Bid: ${{item_data['item'][6]}}</p>
 
     <form action="/place-bid" method="post">
-	<ul style="list-style-type:none">
+	<ul>
         <h4>Please place a bid:</h4>
         <li><input type="radio" name="bid" value="1" checked>$1 </li>
         <li><input type="radio" name="bid" value="5"> $5 </li>
