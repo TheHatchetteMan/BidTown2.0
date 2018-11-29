@@ -1,47 +1,70 @@
-
+<!DOCTYPE html>
 {% extends "base.html" %}
 {% block content %}
-<!DOCTYPE html>
-
 <html lang="en">
-
+<style>
+    .createaccount
+     {
+        display: inline-block;
+        background-color: #878745;
+        height: 500px;
+        width: 300px;
+        border: 5px solid #061306;
+        border-radius: 8px;
+     }
+    .input[type=submit]:hover
+    {
+        padding:5px;
+        border:2px solid #ccc;
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Account Creation</title>
 </head>
 <body>
 
-<h2>Please Fill Out The Registration Form:</h2>
-<br>
-<h4>Pay attention to whether you wish to become a buyer or seller!</h4>
-<br>
-<form action="/LoginForm" method = "POST">
-    E-mail:<br>
-    <input type="email" name="email">
-    <br>
-    First Name:<br>
-    <input type="text" name="FirstName">
-    <br>
-    Last Name:<br>
-    <input type="text" name="LastName">
-    <br>
-    Location: (Please enter your City, State)<br>
-    <input type="text" name="Location">
-    <br>
-    Password:<br>
-    <input type="password" name="password">
-    <br>
-    Confirm-Password:<br>
-    <input type="password" name="ConfirmPassword">
-    <br>
-    <input type="radio" name="type" value="buyer" checked> Buyer<br>
-    <input type="radio" name="type" value="seller"> Seller<br>
-    <br><br>
-    <input type="submit" value="Submit">
-</form>
 
-<P>When you click the submit button, your account
-will be created.</P>
+<div class="col-md-12" align="center">
+    <h2> Please Fill Out The Registration Form:</h2>
+    <br>
+    <h4>Pay attention to whether you wish to become a buyer or seller!</h4>
+    <br>
+</div>
+
+<div class="row" align="center">
+    <div class="container createaccount" align="center">
+        <p></p>
+         <div class="col-md-12">
+            <form action="/LoginForm" method = "POST">
+                E-mail<br>
+                <input type="email" name="email">
+                <br>
+                First Name<br>
+                <input type="text" name="FirstName">
+                <br>
+                Last Name<br>
+                <input type="text" name="LastName">
+                <br>
+                Location (Please enter your City, State)<br>
+                <input type="text" name="Location">
+                <br>
+                Password<br>
+                <input type="password" name="password">
+                <br>
+                Confirm-Password<br>
+                <input type="password" name="ConfirmPassword">
+                <br>
+                <input type="radio" name="type" value="buyer" checked> Buyer<br>
+                <input type="radio" name="type" value="seller"> Seller<br>
+                <input type="submit" value="Submit">
+            </form>
+
+            <P>When you click the submit button, your account
+            will be created.</P>
+         </div>
+    </div>
+</div>
 
 </body>
 </html>
