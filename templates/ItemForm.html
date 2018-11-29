@@ -22,6 +22,7 @@
         <input type="hidden" name="expected-bidcount" value="{{item_data['item'][7]}}">
         <input type="hidden" name="item-id" value="{{item_data['item'][0]}}"> <!-- security: exposes primary key on browser -->
         <input type="submit" value="Submit">
+    </ul>
     </form>
 {% else %}
     <p>The item doesn't exist</p>

@@ -20,18 +20,93 @@ html {
 }
 
 /*========================================================*/
-/*=================== h1, h2, h3, etc. ===================*/
-/*========================================================*/
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Galada', 'Arial', sans-serif;
-}
-
-/*========================================================*/
 /*================== HEADER SECTION ======================*/
 /*========================================================*/
+header {
+/*    border: 2px solid #f80707;*/
+    padding: 0.5%;
+    width: 99%;
+    margin: 0 0.5%;
+}
+
+.section-header {
+    position: relative;
+/*    border: 2px solid #000;*/
+    width: 100%;
+    margin: 0 auto;
+}
+
+.topnav {
+    position: relative;
+    border: 2px solid black;
+    width: 99%;
+    margin: 0 auto;
+}
+
+.topnav ul {
+    display: block;
+    position: relative;
+/*    border: 2px solid #000;*/
+    width: 50%;
+    margin: 0 auto;
+}
+.topnav li {
+    display: inline-block;
+    text-align: center;
+    word-spacing: 2px;
+    margin-right: 1%;
+}
+
+.topnav a {
+    text-align: center;
+}
+
+
+/*========================================================*/
+/*================== BODY ================================*/
+/*========================================================*/
+body { 
+    border: 2px solid #1604ef;
+}
+
+.section-content {
+    display: block;
+    margin: 0 20% 0 20%;
+    padding: 0.5%;
+    border: 2px solid #00f;
+}
 
 
 
 /*========================================================*/
 /*================== FOOTER SECTION ======================*/
 /*========================================================*/
+footer {
+/*    border: 2px solid #000;*/
+}
+
+/*========================================================*/
+/*=================== HTML TAGS ==========================*/
+/*========================================================*/
+a {
+    text-align: center;
+}
+a:visited,
+a:link{
+    text-decoration: none;
+    color: #000; /* DEPRICATED - inherit color from context of parent container */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Galada', 'Arial', sans-serif;
+}
+
+p {
+    font-family: verdana;
+    font-size: 20px;
+}
+
+ul {
+    list-style-type: none;
+}
+

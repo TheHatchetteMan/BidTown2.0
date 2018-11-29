@@ -1,0 +1,40 @@
+<!--    Developer: Hunter Hatchette -->
+
+{% extends "base.html" %}
+{% block content %}
+    <h1>Sell</h1>
+
+    <form action="/Register-Item" method="post">
+	<ul>
+        <h4>List a Pet For Sale:</h4>
+        Name:<br>
+        <input type="text" name="name">
+        <br>
+        URL: (please paste the URL of your image)<br>
+        <input type="url" name="url">
+        <br>
+        Starting Bid: (specify the price you want it to start at)<br>
+        <input type="number" name="start_bid">
+        <br>
+        Description: (Please describe the item for buyers)<br>
+        <input type="text" name="description">
+        <br>
+        Location:<br>
+        <input type="text" name="location">
+        <br>
+        Weight:<br>
+        <input type="number" name="weight">
+        <br>
+        Age:<br>
+        <input type="number" name="age">
+        <br><br>
+        Please Select the Animal Type:
+        <li><input type="radio" name="type" value="Bird">Bird</li>          <!--Type 1-->
+        <li><input type="radio" name="type" value="Bug">Bug</li>            <!--Type 2-->
+        <li><input type="radio" name="type" value="mammal">Mammal</li>      <!--Type 3-->
+        <li><input type="radio" name="type" value="reptile">Reptile</li>    <!--Type 4-->
+        <br><br>
+        <input type="submit" value="Submit">
+    </ul>
+    </form>
+{% endblock %}

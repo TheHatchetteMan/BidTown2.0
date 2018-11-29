@@ -19,7 +19,7 @@ def show_logged_in():
 def base():
 	return render_template("base.html")
 
-#------------------------------------- HOME -------------------------------------#
+#------------------------------------- HOME ----------------------------------------------#
 @app.route('/HomePage')
 def view_popular_item():
     db = DB_Helper()
@@ -47,7 +47,7 @@ def view_popular_item():
 def CreateAccount():
 	return render_template('AccountCreation.html')
 
-#------------------------------------- Login -----------------------------------#
+#------------------------------------- Login ----------------------------------------------#
 @app.route('/Login')
 def Login():
 	return render_template('LoginForm.html')
