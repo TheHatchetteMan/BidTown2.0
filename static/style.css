@@ -139,3 +139,11 @@ ul {
         font-family: Tahoma;
         background: #f4f4f4;
     }
+
+    .jumbotron {
+padding-top: 10px;
+padding-bottom: 20px;
+color: #2f2f2f;
+background-color: #1897e0;
+margin-bottom: 0px;
+}

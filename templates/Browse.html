@@ -1,32 +1,22 @@
 {% extends "base.html" %}
-<title>{% block title %}Browse{% endblock %}</title>
 {% block content %}
-<style>
-.jumbotron {
-padding-top: 10px;
-padding-bottom: 20px;
-color: #2f2f2f;
-background-color: #1897e0;
-margin-bottom: 0px;
-}
-</style>
 <div class="jumbotron">
     <h1 class="col-lg text-center">BidTown<small>&ensp;Search for Exotic Animals Here!</small></h1>
 </div>
 
 <div class="filter-feature">
-<form class="filter-by-class" action="/filter" method="get">
-    <h4>Filter your Results</h4>
-    <p></p>
-    <!--<label for="Class">Choose an animal type</label><br/>-->
-    <select id="Class" name="Class" size="1">
-        <option value="Bird" {%if ClassType == "Bird"%}selected="selected"{%endif%}>Bird</option>
-        <option value="Bug" {%if ClassType == "Bug"%}selected="selected"{%endif%}>Bug</option>
-        <option value="Mammal" {%if ClassType == "Mammal"%}selected="selected"{%endif%}>Mammal</option>
-        <option value="Reptile" {%if ClassType == "Reptile"%}selected="selected"{%endif%}>Reptile</option>
-    </select>
-    <input class="submit-button" type="submit" value="Narrow Search">
-</form>
+    <form class="filter-by-class" action="/filter" method="get">
+        <h4>Filter your Results</h4>
+        <br/>
+        <!--<label for="Class">Choose an animal type</label><br/>-->
+        <select id="Class" name="Class" size="1">
+            <option value="Bird" {%if ClassType == "Bird"%}selected="selected"{%endif%}>Bird</option>
+            <option value="Bug" {%if ClassType == "Bug"%}selected="selected"{%endif%}>Bug</option>
+            <option value="Mammal" {%if ClassType == "Mammal"%}selected="selected"{%endif%}>Mammal</option>
+            <option value="Reptile" {%if ClassType == "Reptile"%}selected="selected"{%endif%}>Reptile</option>
+        </select>
+        <input class="submit-button" type="submit" value="Narrow Search">
+    </form>
 </div>
 
 <br/>
