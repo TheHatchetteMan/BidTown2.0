@@ -94,6 +94,12 @@ def place_bid():
         db.disconnect()
         return redirect("/single-item")
     return "Error"
+
+#------------------------------------ Sell ----------------------------------#
+@app.route("/sell")
+def sell():
+    return render_template("Sell_Item.html")
+
 #------------------------------------ Browse ----------------------------------#
 @app.route("/browse")
 def search():
