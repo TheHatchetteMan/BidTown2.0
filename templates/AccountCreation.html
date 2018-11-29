@@ -7,7 +7,7 @@
      {
         display: inline-block;
         background-color: #878745;
-        height: 500px;
+        height: 400px;
         width: 300px;
         border: 5px solid #061306;
         border-radius: 8px;
@@ -29,7 +29,6 @@
         height:30px;
         font-family: Tahoma;
         background: #f4f4f4;
-
     }
 </style>
 <head>
@@ -50,7 +49,7 @@
     <div class="container createaccount" align="center">
         <p></p>
          <div class="col-md-12">
-            <form action="/LoginForm" method = "POST">
+            <form action="/CreateAccount" method = "POST">
                 E-mail<br>
                 <input type="email" name="email">
                 <br>
@@ -66,11 +65,8 @@
                 Password<br>
                 <input type="password" name="password">
                 <br>
-                Confirm-Password<br>
-                <input type="password" name="ConfirmPassword">
-                <br>
-                <input type="radio" name="type" value="buyer" checked> Buyer<br>
-                <input type="radio" name="type" value="seller"> Seller<br>
+                <input type="radio" name="type" value="1" checked> Buyer<br>
+                <input type="radio" name="type" value="2"> Seller<br>
                 <input type="submit" value="Submit">
             </form>
 
