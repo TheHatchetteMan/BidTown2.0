@@ -100,6 +100,24 @@ def place_bid():
 def sell():
     return render_template("Sell_Item.html")
 
+@app.route("/Register-Item", methods=['POST'])
+def registerSale():
+    if request.method == 'POST' and (request.form != None) or len(request.form) != 0:
+        name = request.form['name']
+        url = request.form['url']
+        start_bid = request.form['start_bid']
+        description = request.form['description']
+        location = request.form['location']
+        weight = request.form['weight']
+        age = request.form['age']
+        type = request.form['type']
+
+        db = DB_Helper()
+        sql = ("Insert into Item VALUES(99, 2, 3, 'The Thing',"
+               "'http://img2.wikia.nocookie.net/__cb20130706102052/fantasticfourmovies/images/6/6d/Fantastic-four_409948d1.jpg',"
+               "'For_Sale', '20.00', '20.00', 0, '2018-11-26', '2018-11-30', 'Greenville', 'He is the thing', 400, 30);")
+
+
 #------------------------------------ Browse ----------------------------------#
 @app.route("/browse")
 def search():
