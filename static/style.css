@@ -29,6 +29,11 @@ header {
     margin: 0 0.5%;
 }
 
+.login-logout {
+    display: inline-block;
+    margin-left: 60%;
+}
+
 .section-header {
     position: relative;
 /*    border: 2px solid #000;*/
@@ -39,16 +44,17 @@ header {
 .topnav {
     position: relative;
     border: 2px solid black;
-    width: 99%;
+    width: 90%;
     margin: 0 auto;
+    /*margin: 0 0 0 10%;*/
 }
 
 .topnav ul {
     display: block;
     position: relative;
 /*    border: 2px solid #000;*/
-    width: 50%;
-    margin: 0 auto;
+    width: 80%;
+    margin: 0 0 0 20%;
 }
 .topnav li {
     display: inline-block;
@@ -185,3 +191,25 @@ margin-bottom: 0px;
         font-family: Tahoma;
         background: #f4f4f4;
     }
+
+/*========================================================*/
+/*=================== BUTTONS ============================*/
+/*========================================================*/
+
+.btn {
+/*    positioning */
+    padding: 19px 25px;
+/*    content */
+    word-spacing: 2px;
+    white-space: nowrap;
+}
+
+.btn:link,
+.btn:visited {
+    /*common button styling */
+/* positioning */
+/*    border: 2px solid white;*/
+    border-radius: 200px;
+    transition: background-color 0.2s;
+/* content */
+}
