@@ -5,13 +5,12 @@
 	<link rel="stylesheet" type="text/css" href="static/normalize.css">
 	<link rel="stylesheet" type="text/css" href="static/style.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato|Galada">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 </head>
 
 <header>
-	  <a href="/CreateAccount">Account</a>
 	<section class="section-header">
 		<div class="topnav">
 			<ul>
@@ -19,37 +18,20 @@
 			  <li><a href="/browse">Browse</a></li>
 			  <li><a href="/EndingSoon">Ending Soon</a></li>
 			  <li><a href="/TopSellers">Top Sellers</a></li>
+			  <li><a href="/CreateAccount">Account</a></li>
+			{% if userLog %}
+			<li><a href="#">Logout</a></li>
+			{% elif not userLog %}
+			<li><a href="/Login">Login</a></li>
+			{% endif %}
 			</ul>
 		</div>
+
 	</section>
-	{% if userLog %}
-		<p> Logout </p>
-	{% elif not userLog %}
-		<a href="/Login">Login Soon</a>
-	{% endif %}
 </header>
 
 <body>
-	
-	</div> 
-	<style>
-		footer {
-            position: fixed;
-            text-align: center;
-            font-family: Courier New;
-			bottom: 0px;
-			width: 100%;
-			color: #fff;
-			font-size: 20px;
-			padding-top: 20px;
-			padding-bottom: 20px;
-			text-shadow: 2px 2px #656534;
-    }
-	</style>
-	
 
-</header>
-<body>
 	<section class="section-content">
 	{% block content %}
         <!-- Page content will be placed here by whatever view inherits from this template -->

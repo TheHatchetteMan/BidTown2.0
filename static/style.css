@@ -82,8 +82,18 @@ body {
 /*================== FOOTER SECTION ======================*/
 /*========================================================*/
 footer {
-/*    border: 2px solid #000;*/
-}
+            /*position: fixed;
+            text-align: center;
+            font-family: Courier New;
+			bottom: 0px;
+			width: 100%;
+			color: #fff;
+			font-size: 20px;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			text-shadow: 2px 2px #656534;*/
+			border: 2px solid #000;
+    }
 
 /*========================================================*/
 /*=================== HTML TAGS ==========================*/
