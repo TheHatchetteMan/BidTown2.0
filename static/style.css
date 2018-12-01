@@ -43,28 +43,32 @@ header {
 
 .topnav {
     position: relative;
-    /*    border: 2px solid black;*/
-    width: 90%;
+    display: block;
+    border: 2px solid black;
+    width: 100%;
     margin: 0 auto;
+    padding: 1% 0;
 /*margin: 0 0 0 10%;*/
 }
 
 .topnav ul {
     display: block;
     position: relative;
-    /*    border: 2px solid #000;*/
-    width: 80%;
-    margin: 0 0 0 20%;
+    border: 2px solid #000;
+    width: 90%;
+    margin: 0 auto;
 }
 .topnav li {
     display: inline-block;
     text-align: center;
     word-spacing: 2px;
-    margin-right: 1%;
+    margin: 0 0 0 4%;
 }
 
 .topnav a {
+    display: inline-block;
     text-align: center;
+    padding: 0 10px 0 10px;
 }
 
 
@@ -110,7 +114,7 @@ a {
 a:visited,
 a:link{
     text-decoration: none;
-    color: #000; /* DEPRICATED - inherit color from context of parent container */
+/*    color: #000;  DEPRICATED - inherit color from context of parent container */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -179,18 +183,27 @@ input[type=submit]:Hover {
 
 .btn {
     /*    positioning */
-    padding: 19px 25px;
+    padding: 1% 2.5% 1% 2.5%;
     /*    content */
     word-spacing: 2px;
     white-space: nowrap;
+    border: 2px solid black;
+    color: #000;
 }
 
 .btn:link,
 .btn:visited {
     /*common button styling */
     /* positioning */
+    display: inline-block;
     /*    border: 2px solid white;*/
     border-radius: 200px;
     transition: background-color 0.2s;
     /* content */
+    text-decoration: none;
+}
+
+.nav-btn {
+    display: inline-block;
+    width: 175px;
 }
