@@ -54,7 +54,7 @@ header {
 .topnav ul {
     display: block;
     position: relative;
-    border: 2px solid #000;
+/*    border: 2px solid #000;*/
     width: 90%;
     margin: 0 auto;
 }
@@ -131,7 +131,7 @@ ul {
 }
 
 
-/*----------------------*/
+/*----------------------*/otic Animals Here!
 .createaccount {
     display: inline-block;
     background-color: #878745;
@@ -206,4 +206,9 @@ input[type=submit]:Hover {
 .nav-btn {
     display: inline-block;
     width: 175px;
+    background-color: white;
+}
+
+.btn-call-to-action {
+    background-color: #f75905;
 }
