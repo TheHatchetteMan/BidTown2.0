@@ -23,10 +23,10 @@ html {
 /*================== HEADER SECTION ======================*/
 /*========================================================*/
 header {
-/*    border: 2px solid #f80707;*/
+    border: 2px solid #f80707;
     padding: 0.5%;
-    width: 99%;
-    margin: 0 0.5%;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .login-logout {
@@ -36,23 +36,23 @@ header {
 
 .section-header {
     position: relative;
-/*    border: 2px solid #000;*/
+    /*    border: 2px solid #000;*/
     width: 100%;
     margin: 0 auto;
 }
 
 .topnav {
     position: relative;
-    border: 2px solid black;
+    /*    border: 2px solid black;*/
     width: 90%;
     margin: 0 auto;
-    /*margin: 0 0 0 10%;*/
+/*margin: 0 0 0 10%;*/
 }
 
 .topnav ul {
     display: block;
     position: relative;
-/*    border: 2px solid #000;*/
+    /*    border: 2px solid #000;*/
     width: 80%;
     margin: 0 0 0 20%;
 }
@@ -77,7 +77,7 @@ body {
 
 .section-content {
     display: block;
-    margin: 0 20% 0 20%;
+    margin: 0 10% 0 10%;
     padding: 0.5%;
     border: 2px solid #00f;
 }
@@ -87,19 +87,19 @@ body {
 /*========================================================*/
 /*================== FOOTER SECTION ======================*/
 /*========================================================*/
-footer {
-            /*position: fixed;
-            text-align: center;
-            font-family: Courier New;
-			bottom: 0px;
-			width: 100%;
-			color: #fff;
-			font-size: 20px;
-			padding-top: 20px;
-			padding-bottom: 20px;
-			text-shadow: 2px 2px #656534;*/
-			border: 2px solid #000;
-    }
+.section-footer {
+    /*position: fixed;
+    text-align: center;
+    font-family: Courier New;
+    bottom: 0px;
+    width: 100%;
+    color: #fff;
+    font-size: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-shadow: 2px 2px #656534;*/
+    border: 2px solid #000;
+}
 
 /*========================================================*/
 /*=================== HTML TAGS ==========================*/
@@ -128,78 +128,59 @@ ul {
 
 
 /*----------------------*/
-.createaccount
-     {
-        display: inline-block;
-        background-color: #878745;
-        height: 400px;
-        width: 300px;
-        border: 5px solid #061306;
-        border-radius: 8px;
-     }
-     input[type=submit]
-     {
-        border-radius: 5px;
-        border: 0;
-        width: 50px;
-        height:25px;
-        font-family: Tahoma;
-        background: #f4f4f4;
-     }
-    input[type=submit]:Hover
-    {
-        border-radius: 5px;
-        border: 3px solid #000000;
-        width: 60px;
-        height:30px;
-        font-family: Tahoma;
-        background: #f4f4f4;
-    }
-
-    .jumbotron {
-padding-top: 10px;
-padding-bottom: 20px;
-color: #2f2f2f;
-background-color: #1897e0;
-margin-bottom: 0px;
+.createaccount {
+    display: inline-block;
+    background-color: #878745;
+    height: 400px;
+    width: 300px;
+    border: 5px solid #061306;
+    border-radius: 8px;
 }
 
-.login
-     {
-        display: inline-block;
-        background-color: #878745;
-        height: 225px;
-        width: 225px;
-        border: 5px solid #061306;
-        border-radius: 8px;
-     }
-     input[type=submit]
-     {
-        border-radius: 5px;
-        border: 0;
-        width: 50px;
-        height:25px;
-        font-family: Tahoma;
-        background: #f4f4f4;
-     }
-    input[type=submit]:Hover
-    {
-        border-radius: 5px;
-        border: 3px solid #000000;
-        width: 60px;
-        height:30px;
-        font-family: Tahoma;
-        background: #f4f4f4;
-    }
+input[type=submit] {
+    border-radius: 5px;
+    border: 0;
+    width: 50px;
+    height:25px;
+    font-family: Tahoma;
+    background: #f4f4f4;
+}
+
+input[type=submit]:Hover {
+    border-radius: 5px;
+    border: 3px solid #000000;
+    width: 60px;
+    height:30px;
+    font-family: Tahoma;
+    background: #f4f4f4;
+}
+
+.jumbotron {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    color: #2f2f2f;
+    background-color: #1897e0;
+    margin-bottom: 0px;
+}
+
+.login {
+    display: inline-block;
+    background-color: #878745;
+    height: 225px;
+    width: 225px;
+    border: 5px solid #061306;
+    border-radius: 8px;
+}
+
 
 /*========================================================*/
 /*=================== BUTTONS ============================*/
 /*========================================================*/
 
 .btn {
-/*    positioning */
+    /*    positioning */
     padding: 19px 25px;
-/*    content */
+    /*    content */
     word-spacing: 2px;
     white-space: nowrap;
 }
@@ -207,9 +188,9 @@ margin-bottom: 0px;
 .btn:link,
 .btn:visited {
     /*common button styling */
-/* positioning */
-/*    border: 2px solid white;*/
+    /* positioning */
+    /*    border: 2px solid white;*/
     border-radius: 200px;
     transition: background-color 0.2s;
-/* content */
+    /* content */
 }

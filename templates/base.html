@@ -20,20 +20,17 @@
 			  <li><a class="btn" href="/TopSellers">Top Sellers</a></li>
 			  <li><a class="btn" href="/CreateAccount">Account</a></li>
 
-						{% if userLog %}
-						<li><a class="btn" href="#">Logout</a></li>
-						{% elif not userLog %}
-						<li><a class="btn" href="/Login">Login</a></li>
-						{% endif %}
+				{% if userLog %}
+				<li><a class="btn" href="#">Logout</a></li>
+				{% elif not userLog %}
+				<li><a class="btn" href="/Login">Login</a></li>
+				{% endif %}
 			</ul>
-
 		</div>
-
 	</section>
 </header>
 
 <body>
-
 	<section class="section-content">
 	{% block content %}
         <!-- Page content will be placed here by whatever view inherits from this template -->
@@ -41,7 +38,9 @@
 	</section>
 </body>
 
-<footer class="footer">
-  <p>&#169; Bidtown.com</p>
+<footer>
+	<div class="section-footer">
+  		<p>&#169; Bidtown.com</p>
+	</div>
 </footer>
 </html>
