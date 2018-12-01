@@ -221,7 +221,7 @@ def authenticate():
 #------------------------------------- CREATE ACCOUNT -------------------------------------#
 @app.route('/CreateAccount', methods=['POST', 'GET'])
 def CreateAccount():
-    if session['bidtown_session_key'] is not None:
+    if 'bidtown_session_key' in session and session['bidtown_session_key'] is not None:  # fixed key error here
         return redirect('/HomePage')
     if request.method == 'POST':
         userEmail = request.form['email']
