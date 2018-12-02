@@ -17,12 +17,28 @@ def show_logged_in():
 
     return dict(userLog=logged_in)
 
+
 #  ------------------------------------- HOME -------------------------------------  #
 @app.route("/")
 @app.route('/HomePage')
 def view_popular_item():
     item_list = bm.get_top_popular(10)  # paramater specifies how many items to populate. default param is 1
     return render_template("HomePage.html", item_list=item_list)
+
+
+#  ------------------------------------- TOP SELLERS ---------------------------------------  #
+@app.route("/TopSellers")
+def view_top_sellers():
+    item_list = bm.get_top_sellers(10)
+    return render_template("TopSellers.html", item_list=item_list)
+
+
+#  ------------------------------------- ENDING SOON ---------------------------------------  #
+@app.route('/EndingSoon')
+def Ending_Soon():
+    item_list = bm.get_ending_soon(10)
+    return render_template("EndingSoon.html", item_list=item_list)
+
 
 #  ------------------------------------- CREATE ACCOUNT -------------------------------------  #
 @app.route('/CreateAccount', methods=['POST', 'GET'])
@@ -62,6 +78,7 @@ def view_single_item(ItemID):
         return bm.view_item(ItemID)
     return "Error fetching single item"
 
+
 @app.route("/place-bid", methods=['POST'])
 def place_bid():
     if request.method == 'POST' and (request.form is not None) or len(request.form) != 0:
@@ -79,10 +96,13 @@ def place_bid():
     #     db.disconnect()
     #     return redirect(f"/item/{Item_ID}")
     # return "Error"
+
+
 #------------------------------------ Browse ----------------------------------#
 @app.route("/browse")
 def search():
     return render_template('Browse.html')
+
 
 @app.route("/filter", methods=['GET'])
 def filter():
@@ -158,10 +178,12 @@ def filter():
     db.disconnect()
     return render_template('Browse.html', item_list=item_list['item'], ClassType=Class, attributes=attributes)
 
+
 #------------------------------------ Account ----------------------------------#
 @app.route("/Account")
 def login():
     return render_template("LoginForm.html")
+
 
 @app.route('/Login', methods=['POST', 'GET'])
 def authenticate():
@@ -193,7 +215,6 @@ def authenticate():
         db.disconnect()
 
         userInt = len(user_exist_list['user'])
-
 
         if userInt == 1:
             user_exists = True
