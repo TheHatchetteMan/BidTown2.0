@@ -4,44 +4,46 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="/static/normalize.css">
 	<link rel="stylesheet" type="text/css" href="/static/style.css">
+	<link rel="stylesheet" type="text/css" href="/static/grid.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato|Galada">
-	<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!--	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+<!--	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+<!--	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 </head>
-
-<header>
-	<section class="section-header">
-		<div class="topnav">
-			<ul>
-			  <li><a class="btn" href="/HomePage">BidTown</a></li>
-			  <li><a class="btn" href="/browse">Browse</a></li>
-			  <li><a class="btn" href="/EndingSoon">Ending Soon</a></li>
-			  <li><a class="btn" href="/TopSellers">Top Sellers</a></li>
-			  <li><a class="btn" href="/CreateAccount">Account</a></li>
-
-						{% if userLog %}
-						<li><a class="btn" href="#">Logout</a></li>
-						{% elif not userLog %}
-						<li><a class="btn" href="/Login">Login</a></li>
-						{% endif %}
-			</ul>
-
-		</div>
-
-	</section>
-</header>
-
 <body>
+    <header>
+	<section class="header">
+        <div class="topnav">
+        <div class="row">
+			<ul>
+			  <li class="span-1-of-6"><a class="btn nav-btn" href="/HomePage">BidTown</a></li>
+			  <li class="span-1-of-6"><a class="btn nav-btn" href="/browse">Browse</a></li>
+			  <li class="span-1-of-6"><a class="btn nav-btn" href="/EndingSoon">Ending Soon</a></li>
+			  <li class="span-1-of-6"><a class="btn nav-btn" href="/TopSellers">Top Sellers</a></li>
+			  <li class="span-1-of-6"><a class="btn nav-btn btn-call-to-action" href="/CreateAccount">Sign up</a></li>
 
-	<section class="section-content">
+				{% if userLog %}
+				<li class="span-1-of-6"><a class="btn nav-btn" href="#">Logout</a></li>
+				{% elif not userLog %}
+				<li class="span-1-of-6"><a class="btn nav-btn" href="/Login">Login</a></li>
+				{% endif %}
+			</ul>
+        </div>
+        </div>
+	</section>
+    </header>
+    
+	<section class="content">
 	{% block content %}
         <!-- Page content will be placed here by whatever view inherits from this template -->
 	{% endblock %}
 	</section>
-</body>
-
-<footer class="footer">
-  <p>&#169; Bidtown.com</p>
+    
+<footer class="section">
+    <div class="row">
+        <p class="col copyright">&#169; Bidtown.com</p>
+    </div>
 </footer>
+
+</body>
 </html>

@@ -10,10 +10,10 @@
         <br/>
         <!--<label for="Class">Choose an animal type</label><br/>-->
         <select id="Class" name="Class" size="1">
-            <option value="Bird" {%if ClassType == "Bird"%}selected="selected"{%endif%}>Bird</option>
-            <option value="Bug" {%if ClassType == "Bug"%}selected="selected"{%endif%}>Bug</option>
-            <option value="Mammal" {%if ClassType == "Mammal"%}selected="selected"{%endif%}>Mammal</option>
-            <option value="Reptile" {%if ClassType == "Reptile"%}selected="selected"{%endif%}>Reptile</option>
+            <option value="Bird" {%if ClassType == "Bird" %}selected="selected"{%endif%}>Bird</option>
+            <option value="Bug" {%if ClassType == "Bug" %}selected="selected"{%endif%}>Bug</option>
+            <option value="Mammal" {%if ClassType == "Mammal" %}selected="selected"{%endif%}>Mammal</option>
+            <option value="Reptile" {%if ClassType == "Reptile" %}selected="selected"{%endif%}>Reptile</option>
         </select>
         <input class="submit-button" type="submit" value="Narrow Search">
     </form>
@@ -37,22 +37,23 @@
     <br>
 
     <br>
-    <div class="filter-results">
-    <label for="filter-results-by-class">Results:</label>
-    <ol id="filter-results-by-class">
-    {% for item in item_list %}
-        <br>
-        <a href="/">
-            <li>
-			   	<a href="/item/{{ item[0] }}">
-			   	<p>{{ item[3] }}</p><br>
-		   		<img src="{{item[4]}}" width="15%" height="25%"/><br>
-		   		<p>Current Bid: ${{item[6]}}</p>
-			   </a>
-		   </li>
-        </a>
-    {% endfor %}
-    </ol>
+    <div class="results">
+        <label for="filter-results-by-class">Results:</label>
+        <ul id="filter-results-by-class">
+        {% for item in item_list %}
+            <div class="row">
+            <li class="result">
+           
+			 <a href="/item/{{ item[0] }}">
+			 <label for="{{item[3]}}">{{ item[3] }}</p><br>
+			 <img id="{{item[3]}}" src="{{item[4]}}" width="15%" height="25%"/>
+                
+			 <p>Current Bid: ${{item[6]}}</p>
+		   </a>
+	   </li>
+    </div>
+        {% endfor %}
+        </ul>
     </div>
 
 </div> <!-- end filter-feature div -->

@@ -88,7 +88,7 @@ def place_bid():
         update = db.connection.cursor(prepared=True)
         update.execute(sql, (bid, Item_ID,))
         db.disconnect()
-        return redirect("/single-item")
+        return redirect(f"/item/{Item_ID}")
     return "Error"
 #------------------------------------ Browse ----------------------------------#
 @app.route("/browse")

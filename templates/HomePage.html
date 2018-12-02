@@ -1,18 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>BidTown Home Page</h1>
-<div class="jumbotron">
+<div class="row jumbotron">
 	<h1 class="col-lg text-center">BidTown<small>&ensp;Bid On Exotic Animals Here!</small></h1>
 </div>
-<ul>
- {% for item in item_list['item'] %} <!-- possibly make unordered list -->
-	   <li>
+<section class="results">
+<div class="col">
+<ul> 
+ {% for item in item_list['item'] %}
+    <div class="row">
+	   <li class="result">
+           
 			<a href="/item/{{ item[0] }}">
-			<p>{{ item[3] }}</p><br>
-			<img src="{{item[4]}}" width="15%" height="25%"/><br>
+			<label for="{{item[3]}}">{{ item[3] }}</p><br>
+			<img id="{{item[3]}}" src="{{item[4]}}" width="15%" height="25%"/>
+                
 			<p>Current Bid: ${{item[6]}}</p>
 		   </a>
 	   </li>
+    </div>
  {% endfor %}
 </ul>
+</div>
+</section>
 {% endblock %}
