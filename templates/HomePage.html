@@ -4,22 +4,38 @@
 	<h1 class="col-lg text-center">BidTown<small>&ensp;Bid On Exotic Animals Here!</small></h1>
 </div>
 <section class="results">
-<div class="col">
+
 <ul> 
  {% for item in item_list['item'] %}
+    <div class="result">
     <div class="row">
-	   <li class="result">
-           
-			<a href="/item/{{ item[0] }}">
-			<label for="{{item[3]}}">{{ item[3] }}</p><br>
-			<img id="{{item[3]}}" src="{{item[4]}}" width="15%" height="25%"/>
-                
-			<p>Current Bid: ${{item[6]}}</p>
-		   </a>
+	   <li>    
+        <a href="/item/{{ item[0] }}">
+        <div class="col span-1-of-3">
+            <label for="{{item[3]}}">{{ item[3] }}</label><br/>
+            <img id="{{item[3]}}" src="{{item[4]}}" width="15%" height="25%"/>
+        </div>
+
+        <div class="col span-1-of-3">
+            <h6>Description</h6>
+            <ul>
+                <p>{{item[12]}}</p>
+            </ul>
+        </div>
+        
+        <div class="col span-1-of-3">
+            <ul>
+                <li>Current Bid: ${{item[6]}}</li>
+                <li>{{item[7]}} bids</li>
+                <li>seller: sellername</li>
+            </ul>
+        </div>
+        </a>
 	   </li>
+    </div>
     </div>
  {% endfor %}
 </ul>
-</div>
+
 </section>
 {% endblock %}
