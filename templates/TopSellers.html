@@ -3,7 +3,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row jumbotron">
-	<h1 class="col-lg text-center">BidTown<small>&ensp;Bid On Exotic Animals Here!</small></h1>
+	<h1 class="col-lg text-center">BidTown<small>&ensp;Check out the Top Sellers!</small></h1>
 </div>
 <section class="results">
 <div class="col">
@@ -13,10 +13,14 @@
 	   <li class="result">
 
 			<a href="/item/{{ item[0] }}">
-			<label for="{{item[3]}}">{{ item[3] }}</label><br>
-			<img id="{{item[3]}}" src="{{item[4]}}" width="15%" height="25%"/>
 
-			<p>Current Bid: ${{item[6]}}</p>
+			<label for="{{item[3]}}">{{ item[3] }}</label><br>
+            <label for="{{item[4]}}">{{ item[4] }}</label><br>
+            <label for="{{item[0]}}">{{ item[0] }}</label><br>
+            <label for="{{item[6]}}">{{ item[6] }}</label><br>
+			<!-- <img id="{{item[3]}}" src="{{item[4]}}" width="15%" height="25%"/> -->
+
+			<!-- <p>Current Bid: ${{item[6]}}</p> -->
 		   </a>
 	   </li>
     </div>

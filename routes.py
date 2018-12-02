@@ -30,7 +30,7 @@ def view_popular_item():
 @app.route("/TopSellers")
 def view_top_sellers():
     item_list = bm.get_top_sellers(10)
-    return render_template("Homepage.html", item_list=item_list)
+    return render_template("TopSellers.html", item_list=item_list)
 
 
 #  ------------------------------------- ENDING SOON ---------------------------------------  #
