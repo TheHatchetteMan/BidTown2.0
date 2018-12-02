@@ -42,6 +42,38 @@ def Ending_Soon():
     return render_template("EndingSoon.html", item_list=item_list)
 
 
+# -------------------------------------- ACCOUNT DASHBOARDS ----------------------------------- #
+@app.route('/Dashboard')
+def Dashboard_Route():
+    seller = None
+    session
+    logged_in = None
+
+    if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
+        if session['bidtown_session_key'[6]] == '1':
+            seller = True
+    else:
+        seller = False
+
+    if seller:
+        return render_template("SellerDashboard.html")
+    else:
+        return render_template("BuyerDashboard.html")
+
+    temp = 'bidtown_session_key'[0]
+    return render_template('SellerDashboard.html')
+
+
+@app.route('/SellerDashboard')
+def Seller_Dashboard():
+    return render_template("SellerDashboard.html")
+
+
+@app.route('/BuyerDashboard')
+def Buyer_Dashboard():
+    return render_template("BuyerDashboard.html")
+
+
 #  ------------------------------------- CREATE ACCOUNT -------------------------------------  #
 @app.route('/CreateAccount', methods=['POST', 'GET'])
 def CreateAccount():
