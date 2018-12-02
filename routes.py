@@ -21,7 +21,7 @@ def show_logged_in():
 @app.route("/")
 @app.route('/HomePage')
 def view_popular_item():
-    item_list = bm.get_top_popular(10)
+    item_list = bm.get_top_popular(10)  # paramater specifies how many items to populate. default param is 1
     return render_template("HomePage.html", item_list=item_list)
 
 #  ------------------------------------- CREATE ACCOUNT -------------------------------------  #
