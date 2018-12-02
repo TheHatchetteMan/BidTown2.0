@@ -24,6 +24,12 @@ def view_popular_item():
     item_list = bm.get_top_popular(10)
     return render_template("HomePage.html", item_list=item_list)
 
+#  ------------------------------------- ENDING SOON ---------------------------------------  #
+@app.route('/EndingSoon')
+def Ending_Soon():
+    item_list = bm.get_top_popular(10)
+    return render_template("EndingSoon.html", item_list=item_list)
+
 #  ------------------------------------- CREATE ACCOUNT -------------------------------------  #
 @app.route('/CreateAccount', methods=['POST', 'GET'])
 def CreateAccount():
