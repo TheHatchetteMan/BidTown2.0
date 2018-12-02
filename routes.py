@@ -21,29 +21,31 @@ def show_logged_in():
 @app.route("/")
 @app.route('/HomePage')
 def view_popular_item():
-    db = DB_Helper()
-    sql = ('SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date '
-           'FROM Item ORDER BY Bid_Count DESC LIMIT 10')
-
-    empty_tuple = ()  # to satisfy execute method for prepared statement
-
-    cursor = db.connection.cursor(prepared=True)
-    cursor.execute(sql, empty_tuple)
-
-    results = cursor.fetchall()
-
-    item_list = {}
-    item_list['item'] = []
-
-    for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
-        item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date])
-
-    db.disconnect()
+    item_list = bm.get_top_popular(10)
     return render_template("HomePage.html", item_list=item_list)
 
 #  ------------------------------------- CREATE ACCOUNT -------------------------------------  #
-@app.route('/CreateAccount')
+@app.route('/CreateAccount', methods=['POST', 'GET'])
 def CreateAccount():
+    if 'bidtown_session_key' in session and session['bidtown_session_key'] is not None:
+        return redirect('/HomePage')  # redirect if logged in
+    if request.method == 'POST':
+        user_email = request.form['email']
+        user_password = request.form['password']
+        user_first_name = request.form['FirstName']
+        user_last_name = request.form['LastName']
+        user_location = request.form['Location']
+        user_type = request.form['type']
+
+        db = DB_Helper()
+        sql = ('INSERT INTO Users(Email, Password, FirstName, LastName, Location, Type) '
+               'VALUES(?, ?, ?, ?, ?, ? )')
+
+        cursor = db.connection.cursor(prepared=True)
+        cursor.execute(sql, (user_email, user_password, user_first_name, user_last_name, user_location, user_type, ))
+        db.disconnect()
+
+        return redirect('/Login')
     return render_template('AccountCreation.html')
 
 
@@ -188,11 +190,9 @@ def authenticate():
                 [UserID, email.decode(), password.decode(), FirstName.decode(), LastName.decode(),
                  Location.decode(), Type])
 
-
         db.disconnect()
 
         userInt = len(user_exist_list['user'])
-
 
 
         if userInt == 1:
@@ -205,27 +205,3 @@ def authenticate():
             # return str(user_exists)
 
     return render_template('LoginForm.html', user_exists = user_exists)
-
-#------------------------------------- CREATE ACCOUNT -------------------------------------#
-@app.route('/CreateAccount', methods=['POST', 'GET'])
-def CreateAccount():
-    if 'bidtown_session_key' in session and session['bidtown_session_key'] is not None:
-        return redirect('/HomePage')  # redirect if logged in
-    if request.method == 'POST':
-        user_email = request.form['email']
-        user_password = request.form['password']
-        user_first_name = request.form['FirstName']
-        user_last_name = request.form['LastName']
-        user_location = request.form['Location']
-        user_type = request.form['type']
-
-        db = DB_Helper()
-        sql = ('INSERT INTO Users(Email, Password, FirstName, LastName, Location, Type) '
-               'VALUES(?, ?, ?, ?, ?, ? )')
-
-        cursor = db.connection.cursor(prepared=True)
-        cursor.execute(sql, (user_email, user_password, user_first_name, user_last_name, user_location, user_type, ))
-        db.disconnect()
-
-        return redirect('/Login')
-    return render_template('AccountCreation.html')

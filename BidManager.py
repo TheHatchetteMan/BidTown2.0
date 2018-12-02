@@ -2,7 +2,7 @@ from flask import request, render_template, redirect
 from DB_Helper import DB_Helper
 
 class BidManager:
-    #static/shared data
+    # static/shared data
 
     def __init__(self):
         self.item = {'expected-bidcount': None, 'expected-bid': None}
@@ -80,3 +80,24 @@ class BidManager:
 
         db.disconnect(commit=True)
         return render_template("ItemForm.html", item_data=item_data)
+
+    def get_top_popular(self, limit=1):
+        db = DB_Helper()
+        sql = ('SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date '
+               'FROM Item ORDER BY Bid_Count DESC LIMIT ?')
+
+        data = (limit,)  # to satisfy execute method for prepared statement
+
+        cursor = db.connection.cursor(prepared=True)
+        cursor.execute(sql, data)
+        results = cursor.fetchall()
+
+        item_list = {'item': []}
+
+        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
+            item_list['item'].append(
+                [ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count,
+                 Start_Date, End_Date])
+
+        db.disconnect()
+        return item_list
