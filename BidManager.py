@@ -101,3 +101,24 @@ class BidManager:
 
         db.disconnect()
         return item_list
+
+    def get_ending_soon(self, limit=1):
+        db = DB_Helper()
+        sql = ('SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date '
+               'FROM Item ORDER BY End_Date LIMIT ?')
+
+        data = (limit,)  # to satisfy execute method for prepared statement
+
+        cursor = db.connection.cursor(prepared=True)
+        cursor.execute(sql,data)
+        results = cursor.fetchall()
+
+        item_list = {'item': []}
+
+        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
+            item_list['item'].append(
+                [ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count,
+                 Start_Date, End_Date])
+
+        db.disconnect()
+        return item_list
