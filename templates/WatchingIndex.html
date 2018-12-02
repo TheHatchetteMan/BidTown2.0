@@ -6,8 +6,24 @@
 	<h1 class="col-lg text-center">BidTown<small> Watching Items</small></h1>
 </div>
 
-    <div>
+<section class="results">
+<div class="col">
+<ul>
+ {% for item in item_list['item'] %}
+    <div class="row">
+	   <li class="result">
 
+			<a href="/item/{{ item[0] }}">
+			<label for="{{item[3]}}">{{ item[3] }}</label><br>
+			<img id="{{item[3]}}" src="{{item[4]}}" width="15%" height="25%"/>
+
+			<p>Current Bid: ${{item[6]}}</p>
+		   </a>
+	   </li>
     </div>
+ {% endfor %}
+</ul>
+</div>
+</section>
 
 {% endblock %}
