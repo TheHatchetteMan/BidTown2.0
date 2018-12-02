@@ -4,7 +4,8 @@
 <div class="jumbotron">
 	<h1 class="col-lg text-center">BidTown<small>&ensp;Bid On Exotic Animals Here!</small></h1>
 </div>
-<ul>
+<div class="results">
+<ul> 
  {% for item in item_list['item'] %} <!-- possibly make unordered list -->
 	   <li>
 			<a href="/item/{{ item[0] }}">
@@ -15,4 +16,5 @@
 	   </li>
  {% endfor %}
 </ul>
+</div>
 {% endblock %}
