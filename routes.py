@@ -113,10 +113,13 @@ def registerSale():
         type = request.form['type']
 
         db = DB_Helper()
-        sql = ("Insert into Item VALUES(99, 2, 3, 'The Thing',"
-               "'http://img2.wikia.nocookie.net/__cb20130706102052/fantasticfourmovies/images/6/6d/Fantastic-four_409948d1.jpg',"
-               "'For_Sale', '20.00', '20.00', 0, '2018-11-26', '2018-11-30', 'Greenville', 'He is the thing', 400, 30);")
-
+        sql = (97, 2, 3, 'Monkey Bunny', 'http://sunnyslideup.com/wp-content/uploads/2013/03/MonkeyBunny-724x1024.jpeg',
+               'For_Sale', '20.00', '20.00', 0, '2018-11-26', '2018-11-30', 'Greenville', 'He is the monkey bunny', 12, 3);
+        update = db.connection.cursor(prepared=True)
+        update.execute(sql)
+        db.disconnect()
+        return redirect("/browse")
+    return "Error"
 
 #------------------------------------ Browse ----------------------------------#
 @app.route("/browse")
