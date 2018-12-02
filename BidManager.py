@@ -75,7 +75,7 @@ class BidManager:
                                  Start_Date,
                                  End_Date]
 
-        self.item['expected-bidcount'] = item_data['item'][7]
+        self.item['expected-bidcount'] = item_data['item'][7]  # user expectation set here and must be captured
         self.item['expected-bid'] = item_data['item'][6]
 
         db.disconnect(commit=True)

@@ -56,7 +56,7 @@ def Login():
 
 
 #  ------------------------------------ Test Page----------------------------------  #
-@app.route("/single-item/<int:ItemID>", methods=['GET'])  # testing
+@app.route("/item/<int:ItemID>", methods=['GET'])  # testing
 def view_single_item(ItemID):
     if request.method == 'GET':
         return bm.view_item(ItemID)
