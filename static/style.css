@@ -29,47 +29,16 @@ header {
     margin: 0 auto;
 }
 
-.login-logout {
-    display: inline-block;
-    margin-left: 60%;
-}
-
-.section-header {
-    position: relative;
-    /*    border: 2px solid #000;*/
-    width: 100%;
-    margin: 0 auto;
-}
-
 .topnav {
-    position: relative;
-    display: block;
-    border: 2px solid black;
+/*    border: 2px solid black;*/
     width: 100%;
-    margin: 0 auto;
-    padding: 1% 0;
-/*margin: 0 0 0 10%;*/
+    padding: 0 5% 0 7%;
 }
 
-.topnav ul {
-    display: block;
-    position: relative;
-/*    border: 2px solid #000;*/
-    width: 90%;
-    margin: 0 auto;
-}
 .topnav li {
     display: inline-block;
-    text-align: center;
-    word-spacing: 2px;
-    margin: 0 0 0 4%;
 }
 
-.topnav a {
-    display: inline-block;
-    text-align: center;
-    padding: 0 10px 0 10px;
-}
 
 
 /*========================================================*/
@@ -79,6 +48,13 @@ header {
 .results {
     display: block;
     border: 2px solid red;
+}
+
+.result {
+    display: block;
+    border: 2px solid black;
+    margin: 1%;
+    padding: 1%;
 }
 
 .section-content {
@@ -107,6 +83,11 @@ header {
     border: 2px solid #000;
 }
 
+.copyright {
+    display: inline-block;
+    margin: 0 auto;
+}
+
 /*========================================================*/
 /*=================== HTML TAGS ==========================*/
 /*========================================================*/
@@ -119,9 +100,13 @@ a:link{
 /*    color: #000;  DEPRICATED - inherit color from context of parent container */
 }
 
+/*
 body { 
     border: 2px solid #1604ef;
+    max-width: 1450px;
+    margin: 0 auto;
 }
+*/
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Galada', 'Arial', sans-serif;
@@ -137,7 +122,7 @@ ul {
 }
 
 
-/*----------------------*/otic Animals Here!
+/*----------------------*/
 .createaccount {
     display: inline-block;
     background-color: #878745;
@@ -208,6 +193,7 @@ input[type=submit]:Hover {
     /* content */
     text-decoration: none;
 }
+
 
 .nav-btn {
     display: inline-block;
