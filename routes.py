@@ -26,6 +26,13 @@ def view_popular_item():
     return render_template("HomePage.html", item_list=item_list)
 
 
+#  ------------------------------------- TOP SELLERS ---------------------------------------  #
+@app.route("/TopSellers")
+def view_top_sellers():
+    item_list = bm.get_top_sellers(10)
+    return render_template("Homepage.html", item_list=item_list)
+
+
 #  ------------------------------------- ENDING SOON ---------------------------------------  #
 @app.route('/EndingSoon')
 def Ending_Soon():
