@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, session
 from DB_Helper import DB_Helper
 from BidManager import BidManager
 
-# static
+#  common objects & data
 bm = BidManager()
 @app.context_processor
 def show_logged_in():
@@ -17,12 +17,8 @@ def show_logged_in():
 
     return dict(userLog=logged_in)
 
-
-@app.route("/")
-def base():
-	return render_template("base.html")
-
 #  ------------------------------------- HOME -------------------------------------  #
+@app.route("/")
 @app.route('/HomePage')
 def view_popular_item():
     db = DB_Helper()
@@ -48,40 +44,39 @@ def view_popular_item():
 #  ------------------------------------- CREATE ACCOUNT -------------------------------------  #
 @app.route('/CreateAccount')
 def CreateAccount():
-	return render_template('AccountCreation.html')
+    return render_template('AccountCreation.html')
 
-#------------------------------------- Login ----------------------------------------------#
+
 #  ------------------------------------- Login -----------------------------------  #
 @app.route('/Login')
 def Login():
-	return render_template('LoginForm.html')
+    return render_template('LoginForm.html')
 
-#------------------------------------ Test Page----------------------------------#
+
 #  ------------------------------------ Test Page----------------------------------  #
-
 @app.route("/single-item/<int:ItemID>", methods=['GET'])  # testing
 def view_single_item(ItemID):
-	if request.method == 'GET':
-		return bm.view_item(ItemID)
-	return "Error fetching single item"
+    if request.method == 'GET':
+        return bm.view_item(ItemID)
+    return "Error fetching single item"
 
-@app.route("/place-bid", methods=['POST'])  # executed on ItemForm.html view
+@app.route("/place-bid", methods=['POST'])
 def place_bid():
-	if request.method == 'POST' and (request.form is not None) or len(request.form) != 0:
-		return bm.place_bid()
-	return "Error placing a bid"
+    if request.method == 'POST' and (request.form is not None) or len(request.form) != 0:
+        return bm.place_bid()
+    return "Error placing a bid"
 
-        db = DB_Helper()
-        sql = ("UPDATE Item "
-               "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1 "
-               f"WHERE ItemID = ? AND Bid_Count = {expected_bidcount}"
-               )
-
-        update = db.connection.cursor(prepared=True)
-        update.execute(sql, (bid, Item_ID,))
-        db.disconnect()
-        return redirect(f"/item/{Item_ID}")
-    return "Error"
+    #     db = DB_Helper()
+    #     sql = ("UPDATE Item "
+    #            "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1 "
+    #            f"WHERE ItemID = ? AND Bid_Count = {expected_bidcount}"
+    #            )
+    #
+    #     update = db.connection.cursor(prepared=True)
+    #     update.execute(sql, (bid, Item_ID,))
+    #     db.disconnect()
+    #     return redirect(f"/item/{Item_ID}")
+    # return "Error"
 #------------------------------------ Browse ----------------------------------#
 @app.route("/browse")
 def search():
@@ -210,28 +205,26 @@ def authenticate():
             # return str(user_exists)
 
     return render_template('LoginForm.html', user_exists = user_exists)
+
 #------------------------------------- CREATE ACCOUNT -------------------------------------#
 @app.route('/CreateAccount', methods=['POST', 'GET'])
 def CreateAccount():
-    if 'bidtown_session_key' in session and session['bidtown_session_key'] is not None:  # fixed key error here - Chris
-        return redirect('/HomePage')
+    if 'bidtown_session_key' in session and session['bidtown_session_key'] is not None:
+        return redirect('/HomePage')  # redirect if logged in
     if request.method == 'POST':
-        userEmail = request.form['email']
-        userPassword = request.form['password']
-        userFirstName = request.form['FirstName']
-        userLastName = request.form['LastName']
-        userLocation = request.form['Location']
-        userType = request.form['type']
+        user_email = request.form['email']
+        user_password = request.form['password']
+        user_first_name = request.form['FirstName']
+        user_last_name = request.form['LastName']
+        user_location = request.form['Location']
+        user_type = request.form['type']
 
         db = DB_Helper()
         sql = ('INSERT INTO Users(Email, Password, FirstName, LastName, Location, Type) '
                'VALUES(?, ?, ?, ?, ?, ? )')
 
-        #empty_tuple = ()
-
         cursor = db.connection.cursor(prepared=True)
-        cursor.execute(sql, (userEmail, userPassword, userFirstName, userLastName, userLocation, userType, ))
-
+        cursor.execute(sql, (user_email, user_password, user_first_name, user_last_name, user_location, user_type, ))
         db.disconnect()
 
         return redirect('/Login')
