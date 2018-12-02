@@ -90,7 +90,7 @@ class BidManager:
                "u.FirstName, u.LastName, u.Location "
                "FROM Item i, Users u "
                "WHERE u.UserID=i.UserID "
-               "AND u.Type=1 "
+               "AND u.Type=1 AND i.Status='For_Sale' "
                "ORDER BY Bid_Count DESC LIMIT ?")
 
         data = (limit,)  # to satisfy execute method for prepared statement
