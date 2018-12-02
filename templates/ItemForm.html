@@ -10,6 +10,9 @@
     <img src="{{item_data['item'][4]}}"
          width="50%" height="50%"><img><br>
     <p>Current Bid: ${{item_data['item'][6]}}</p>
+    {% if messages|length != 0  %}
+    <p>{{ messages }}</p>
+    {% endif %}
 
     <form action="/place-bid" method="post">
 	<ul>
@@ -19,7 +22,8 @@
         <li><input type="radio" name="bid" value="10"> $10 </li>
         <li><input type="radio" name="bid" value="50"> $50 </li>
         <li><input type="radio" name="bid" value="100"> $100 </li>
-        <input type="hidden" name="expected-bidcount" value="{{item_data['item'][7]}}">
+        <!--<input type="hidden" name="expected-bidcount" value="{{item_data['item'][7]}}">-->
+        <!--<input type="hidden" name="expected-bid" value="{{item_data['item'][6]}}">-->
         <input type="hidden" name="item-id" value="{{item_data['item'][0]}}"> <!-- security: exposes primary key on browser -->
         <input type="submit" value="Submit">
     </ul>

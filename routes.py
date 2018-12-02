@@ -1,7 +1,10 @@
 from app_config import app
 from flask import render_template, request, redirect, session
 from DB_Helper import DB_Helper
+from BidManager import BidManager
 
+# static
+bm = BidManager()
 @app.context_processor
 def show_logged_in():
     session
@@ -19,14 +22,14 @@ def show_logged_in():
 def base():
 	return render_template("base.html")
 
-#------------------------------------- HOME ----------------------------------------------#
+#  ------------------------------------- HOME -------------------------------------  #
 @app.route('/HomePage')
 def view_popular_item():
     db = DB_Helper()
     sql = ('SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date '
            'FROM Item ORDER BY Bid_Count DESC LIMIT 10')
 
-    empty_tuple = ()
+    empty_tuple = ()  # to satisfy execute method for prepared statement
 
     cursor = db.connection.cursor(prepared=True)
     cursor.execute(sql, empty_tuple)
@@ -42,42 +45,31 @@ def view_popular_item():
     db.disconnect()
     return render_template("HomePage.html", item_list=item_list)
 
+#  ------------------------------------- CREATE ACCOUNT -------------------------------------  #
+@app.route('/CreateAccount')
+def CreateAccount():
+	return render_template('AccountCreation.html')
 
 #------------------------------------- Login ----------------------------------------------#
+#  ------------------------------------- Login -----------------------------------  #
 @app.route('/Login')
 def Login():
 	return render_template('LoginForm.html')
 
 #------------------------------------ Test Page----------------------------------#
-@app.route("/item/<int:id>")  # testing
-def view_single_item(id=None):
-    if id == 0 or id is None:
-        return "no item"
+#  ------------------------------------ Test Page----------------------------------  #
 
-    db = DB_Helper()
-    sql = ("SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date " \
-          "FROM Item "
-           "WHERE ItemID = ? ")
-    id = (id,)  # for prepared statement functionality
-    cursor = db.connection.cursor(prepared=True)
-    cursor.execute(sql, id)
+@app.route("/single-item/<int:ItemID>", methods=['GET'])  # testing
+def view_single_item(ItemID):
+	if request.method == 'GET':
+		return bm.view_item(ItemID)
+	return "Error fetching single item"
 
-    results = cursor.fetchall()
-
-    item_data = {}
-
-    for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
-        item_data['item'] = [ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date]
-
-    db.disconnect(commit=True)
-    return render_template("ItemForm.html", item_data=item_data)
-
-@app.route("/place-bid", methods=['POST'])
+@app.route("/place-bid", methods=['POST'])  # executed on ItemForm.html view
 def place_bid():
-    if request.method == 'POST' and (request.form != None) or len(request.form) != 0:
-        bid = request.form['bid']
-        Item_ID = request.form['item-id']
-        expected_bidcount = request.form['expected-bidcount']
+	if request.method == 'POST' and (request.form is not None) or len(request.form) != 0:
+		return bm.place_bid()
+	return "Error placing a bid"
 
         db = DB_Helper()
         sql = ("UPDATE Item "
