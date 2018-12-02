@@ -5,6 +5,8 @@ from BidManager import BidManager
 
 #  common objects & data
 bm = BidManager()
+
+
 @app.context_processor
 def show_logged_in():
     session
@@ -179,7 +181,7 @@ def filter():
     return render_template('Browse.html', item_list=item_list['item'], ClassType=Class, attributes=attributes)
 
 
-#------------------------------------ Account ----------------------------------#
+# ------------------------------------ Account ----------------------------------#
 @app.route("/Account")
 def login():
     return render_template("LoginForm.html")
