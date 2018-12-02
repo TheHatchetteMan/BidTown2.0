@@ -74,6 +74,32 @@ def Buyer_Dashboard():
     return render_template("BuyerDashboard.html")
 
 
+# ------------------------------------- ACCOUNT MANAGEMENT ---------------------------------- #
+@app.route('/ActiveIndex')
+def Active_Index():
+    return render_template("ActiveIndex.html")
+
+
+@app.route('/SoldIndex')
+def Sold_Index():
+    return render_template("SoldIndex.html")
+
+
+@app.route('/WatchingIndex')
+def Watching_Index():
+    return render_template("WatchingIndex.html")
+
+
+@app.route('/BoughtIndex')
+def Bought_Index():
+    return render_template("BoughtIndex.html")
+
+
+@app.route('/BidIndex')
+def Bid_Index():
+    return render_template("BidIndex.html")
+
+
 #  ------------------------------------- CREATE ACCOUNT -------------------------------------  #
 @app.route('/CreateAccount', methods=['POST', 'GET'])
 def CreateAccount():
