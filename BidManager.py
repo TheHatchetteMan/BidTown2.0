@@ -1,6 +1,7 @@
 from flask import request, render_template, redirect
 from DB_Helper import DB_Helper
 
+
 class BidManager:
     # static/shared data
 
