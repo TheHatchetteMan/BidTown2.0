@@ -53,3 +53,22 @@ class User:
 
     def is_admin(self):
         return self.identity['type'] == 2
+
+    def get_name(self, name=3):
+        """Get the name of the user. 3 options: 1=firstname only, 2=lastname only, 3=fullname... else None"""
+        if name == 3:
+            return self.identity['fn'] + " " + self.identity['ln']
+        elif name == 2:
+            return self.identity['ln']
+        elif name == 1:
+            return self.identity['fn']
+        return None
+
+    def get_email(self):
+        return self.identity['email']
+
+    def get_location(self):
+        return self.identity['location']
+
+    def get_user_id(self):
+        return self.identity['user_id']
