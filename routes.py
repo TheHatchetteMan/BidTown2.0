@@ -6,6 +6,7 @@ from AccountManager import AccountManager
 
 #  common objects & data
 bm = BidManager()
+am = AccountManager()
 
 
 @app.context_processor
@@ -43,7 +44,43 @@ def Ending_Soon():
     return render_template("EndingSoon.html", item_list=item_list)
 
 
-# -------------------------------------- ACCOUNT DASHBOARDS ----------------------------------- #
+# ------------------------------------- ACCOUNT MANAGEMENT ---------------------------------- #
+# ----- Display Seller's Active Items ----- #
+@app.route('/ActiveIndex')
+def Active_Index():
+    item_list = ()
+    return render_template("ActiveIndex.html", item_list=item_list)
+
+
+# ----- Display Seller's Sold Items ----- #
+@app.route('/SoldIndex')
+def Sold_Index():
+    item_list = am.view_sold_items(50)
+    return render_template("SoldIndex.html", item_list=item_list)
+
+
+# ----- Display Buyer's Watching items ----- #
+@app.route('/WatchingIndex')
+def Watching_Index():
+    item_list = am.view_watching_items(50)
+    return render_template("WatchingIndex.html", item_list=item_list)
+
+
+# ----- Display Buyer's Bought Items ----- #
+@app.route('/BoughtIndex')
+def Bought_Index():
+    item_list = am.view_bought_items(50)
+    return render_template("BoughtIndex.html", item_list=item_list)
+
+
+# ----- Display Items Where Buyer Is Highest Bidder ----- #
+@app.route('/BidIndex')
+def Bid_Index():
+    item_list = am.view_bid_items(50)
+    return render_template("BidIndex.html", item_list=item_list)
+
+
+# ----- Display Appropriate User Dashboard ----- #
 @app.route('/Dashboard')
 def Dashboard_Route():
     seller = None
@@ -65,45 +102,32 @@ def Dashboard_Route():
     return render_template('SellerDashboard.html')
 
 
+# ----- Display The Seller Dashboard ----- #
 @app.route('/SellerDashboard')
 def Seller_Dashboard():
     return render_template("SellerDashboard.html")
 
 
+# ----- Display The Buyer Dashboard ----- #
 @app.route('/BuyerDashboard')
 def Buyer_Dashboard():
     return render_template("BuyerDashboard.html")
 
 
-# ------------------------------------- ACCOUNT MANAGEMENT ---------------------------------- #
-@app.route('/ActiveIndex')
-def Active_Index():
-    item_list = ()
-    return render_template("ActiveIndex.html", item_list=item_list)
+@app.route('/ApplicationsIndex')
+def Applications_Index():
+    return render_template("ApplicationsIndex.html")
 
 
-@app.route('/SoldIndex')
-def Sold_Index():
-    item_list = ()
-    return render_template("SoldIndex.html", item_list=item_list)
+@app.route('/ReportsIndex')
+def Reports_Index():
+    return render_template("ReportsIndex.html")
 
 
-@app.route('/WatchingIndex')
-def Watching_Index():
-    item_list = ()
-    return render_template("WatchingIndex.html", item_list=item_list)
-
-
-@app.route('/BoughtIndex')
-def Bought_Index():
-    item_list = ()
-    return render_template("BoughtIndex.html", item_list=item_list)
-
-
-@app.route('/BidIndex')
-def Bid_Index():
-    item_list = ()
-    return render_template("BidIndex.html", item_list=item_list)
+# ----- Display The Admin Dashboard ----- #
+@app.route('/AdminDashboard')
+def Admoin_Dashboard():
+    return render_template("AdminDashboard.html")
 
 
 #  ------------------------------------- CREATE ACCOUNT -------------------------------------  #
