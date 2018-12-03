@@ -176,43 +176,13 @@ def login():
     return render_template("LoginForm.html")
 
 
-@app.route('/Login', methods=['POST', 'GET'])
+@app.route('/Login', methods=['POST'])
 def signin():
-    user_exists = False
-    if request.method == 'POST':
-        userEmail = request.form['email']
-        userPassword = request.form['password']
-        user_exist_list = {'user': []}
+    user_data = user.authenticate()  # authenticate user identity
+    user_exists = len(user_data['user']) == 1
 
-        db = DB_Helper()
-        sql = (f'SELECT UserID, "{userEmail}", "{userPassword}", FirstName, LastName, Location, Type '
-               'FROM Users '
-               f'WHERE Users.email = "{userEmail}" AND Users.password = "{userPassword}"')
+    if user_exists:
+        user.set_session(user_data)  # allow session
+        return redirect('/HomePage')
+    return render_template("LoginForm.html", Logged_In=user_exists) + "Failed Login"
 
-        empty_tuple = ()
-
-        cursor = db.connection.cursor(prepared=True)
-        cursor.execute(sql, empty_tuple)
-        results = cursor.fetchall()
-
-        user_exist_list['user'] = []
-
-        for (UserID, email, password, FirstName, LastName, Location, Type) in results:
-            user_exist_list['user'].append(
-                [UserID, email.decode(), password.decode(), FirstName.decode(), LastName.decode(),
-                 Location.decode(), Type])
-
-        db.disconnect()
-
-        userInt = len(user_exist_list['user'])
-
-        if userInt == 1:
-            user_exists = True
-            session['bidtown_session_key'] = user_exist_list['user']
-            return redirect('/HomePage')
-            # return str(user_exists)
-        else:
-            return render_template("LoginForm.html", Logged_In = user_exists)
-            # return str(user_exists)
-
-    return render_template('LoginForm.html', user_exists = user_exists)
