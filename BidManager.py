@@ -155,3 +155,4 @@ class BidManager:
 
         db.disconnect()
         return item_list
+
