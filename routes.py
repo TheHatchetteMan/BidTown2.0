@@ -76,9 +76,9 @@ def Login():
 #  ------------------------------------ Test Page----------------------------------  #
 @app.route("/item/<int:ItemID>", methods=['GET'])  # testing
 def view_single_item(ItemID):
-    if request.method == 'GET':
+    if request.method == 'GET' and not ItemID < 1:
         return bm.view_item(ItemID)
-    return "Error fetching single item"
+    return render_template("ItemForm.html")
 
 
 @app.route("/place-bid", methods=['POST'])

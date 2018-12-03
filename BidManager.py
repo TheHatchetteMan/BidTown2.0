@@ -63,20 +63,20 @@ class BidManager:
 
         results = cursor.fetchall()
 
-        item_data = {}
+        item_data = {'item': []}
 
         for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
-            item_data['item'] = [ItemID, UserID, ClassID,
+            item_data['item'].append([ItemID, UserID, ClassID,
                                  Name.decode(),
                                  Image_Url.decode(),
                                  Status,
                                  Current_Bid.decode(),
                                  Bid_Count,
                                  Start_Date,
-                                 End_Date]
-
-        self.item['expected-bidcount'] = item_data['item'][7]  # user expectation set here and must be captured
-        self.item['expected-bid'] = item_data['item'][6]
+                                 End_Date])
+        if len(item_data['item']) != 0:
+            self.item['expected-bidcount'] = item_data['item'][0][7]  # user expectation set here and must be captured
+            self.item['expected-bid'] = item_data['item'][0][6]
 
         db.disconnect(commit=True)
         return render_template("ItemForm.html", item_data=item_data)
