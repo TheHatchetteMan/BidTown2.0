@@ -75,10 +75,13 @@ class User:
 
     def is_logged_in(self):
         """General login check. Check that a session cookie exists regardless of account type"""
-        return 'bidtown_session_key' in session and self.session_size('bidtown_session_key') == 7
+        return 'bidtown_session_key' in session and self.session_size('bidtown_session_key') == 6
 
     def session_size(self, session_key_name):
         """Gets session data list size. Returns -1 to indicate session doesn't exist"""
         if session_key_name in session:
             return len(session[session_key_name])
         return -1
+
+    def bid_allowed(self):
+        return self.is_logged_in() and self.is_buyer()
