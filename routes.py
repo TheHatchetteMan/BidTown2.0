@@ -188,3 +188,6 @@ def signin():
         return redirect('/HomePage')
     return render_template("LoginForm.html", Logged_In=user_exists) + "Failed Login"
 
+@app.route('/Logout')
+def logout():
+    return user.logout()

@@ -1,4 +1,4 @@
-from flask import request, redirect, render_template, session
+from flask import request, redirect, render_template, session, make_response
 from DB_Helper import DB_Helper
 
 class User:
@@ -85,3 +85,15 @@ class User:
 
     def bid_allowed(self):
         return self.is_logged_in() and self.is_buyer()
+
+    def clear_identity(self):
+        self.identity = {'user_id': None, 'email': None, 'fn': None, 'ln': None, 'location': None, 'type': None}
+        return self.identity()
+
+    def logout(self):
+        if self.is_logged_in():
+            self.clear_identity()
+        session.pop('bidtown_session_key', None)
+        res = make_response(render_template('LoginForm.html'))
+        res.set_cookie('session', max_age=0)
+        return res
