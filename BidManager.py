@@ -13,17 +13,21 @@ class BidManager:
         self.item['expected-bidcount'] = None
 
     def place_bid(self):  # must be called after view_item(id)
-        db = DB_Helper()
-
         # data
         bid_increment = float(request.form['bid'])
-        item_id = request.form['item-id']
+        item_id = int(request.form['item-id'])  # needs to be int for query
         expected_bidcount = self.item['expected-bidcount']
-        expected_bid_total = float(self.item['expected-bid']) + bid_increment
+        expected_bid_total = self.item['expected-bid'] + bid_increment
+        userid = None
 
+        is_buyer = self.get_user_type() is "buyer"
+        userid = self.get_user_id()  # if userid == -1 at run time, get_user_id failed to get session info
+
+        db = DB_Helper()
         # check that bid expectation is what will actually happen AKA recheck for actual bid and bid count match
         cursor = db.connection.cursor()
         cursor.execute(f"SELECT Current_Bid, Bid_Count FROM Item WHERE ItemID={item_id}")
+
         actual_bidcount = -1
         actual_current_bid = bid_increment
         for (Current_Bid, Bid_Count) in cursor:
@@ -34,7 +38,9 @@ class BidManager:
 
         # is the user behind in their attempt to bid
         # if the user updates their bid, will the resulting bid amount be what they were expecting
-        meets_expectation = (expected_bidcount == actual_bidcount) and (expected_bid_total == actual_bid_total)
+        meets_expectation = (expected_bidcount == actual_bidcount) \
+                            and (expected_bid_total == actual_bid_total) and \
+                            is_buyer
 
         if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
             userid = {{session['bidtown_session_key'][0][0]}}
@@ -57,6 +63,9 @@ class BidManager:
         return redirect("/item/{id}".format(id=item_id))
                                                                                                                
     def view_item(self, id):  # must be called before place_bid()
+        self.item['expected-bidcount'] = None
+        self.item['expected-bid'] = None
+
         db = DB_Helper()
         sql = ("SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date "
                "FROM Item "
@@ -70,17 +79,11 @@ class BidManager:
         item_data = {'item': []}
 
         for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
-            item_data['item'].append([ItemID, UserID, ClassID,
-                                 Name.decode(),
-                                 Image_Url.decode(),
-                                 Status,
-                                 Current_Bid.decode(),
-                                 Bid_Count,
-                                 Start_Date,
-                                 End_Date])
-        if len(item_data['item']) != 0:
-            self.item['expected-bidcount'] = item_data['item'][0][7]  # user expectation set here and must be captured
-            self.item['expected-bid'] = item_data['item'][0][6]
+            item_data['item'] = [ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status,
+                                 Current_Bid.decode(), Bid_Count, Start_Date, End_Date]
+
+        self.item['expected-bidcount'] = item_data['item'][7]  # user expectation set here and must be captured
+        self.item['expected-bid'] = float(item_data['item'][6])
 
         db.disconnect(commit=True)
         return render_template("ItemForm.html", item_data=item_data)
@@ -156,3 +159,25 @@ class BidManager:
         db.disconnect()
         return item_list
 
+    def get_user_type(self):
+        """Uses the session to determine who user is: buyer, seller, or admin"""
+        user_type = None
+
+        if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
+            if type(session['bidtown_session_key'][0][0]) is int and session['bidtown_session_key'][0][6] == 0:
+                user_type = "buyer"
+            elif type(session['bidtown_session_key'][0][0]) is int and session['bidtown_session_key'][0][6] == 1:
+                user_type = "seller"
+            else:
+                user_type = "admin"
+
+        return user_type
+
+    def get_user_id(self):
+        """Obtains the user_id from the session cookie. Returns -1 if no user was found"""
+        user_id = -1
+
+        if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
+            if type(session['bidtown_session_key'][0][0]) is int:
+                user_id = session['bidtown_session_key'][0][0]  # store the user id from session cookie
+        return user_id

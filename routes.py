@@ -272,7 +272,7 @@ def login():
 
 
 @app.route('/Login', methods=['POST', 'GET'])
-def authenticate():
+def signin():
     user_exists = False
     if request.method == 'POST':
         userEmail = request.form['email']
@@ -293,7 +293,7 @@ def authenticate():
         user_exist_list['user'] = []
 
         userInt = 0
-        for (UserID , email, password, FirstName, LastName, Location, Type ) in results:
+        for (UserID, email, password, FirstName, LastName, Location, Type) in results:
             user_exist_list['user'].append(
                 [UserID, email.decode(), password.decode(), FirstName.decode(), LastName.decode(),
                  Location.decode(), Type])
