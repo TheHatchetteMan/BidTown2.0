@@ -1,7 +1,6 @@
 from flask import request, render_template, redirect, session
 from DB_Helper import DB_Helper
 
-
 class BidManager:
     # static/shared data
 
@@ -59,10 +58,13 @@ class BidManager:
         db.disconnect()
         return redirect("/item/{id}".format(id=item_id))
                                                                                                                
-    def view_item(self, id):  # must be called before place_bid()
+    def view_item(self, id, allow_to_bid=False):  # must be called before place_bid()
         self.item['expected-bidcount'] = None
         self.item['expected-bid'] = None
 
+        allow_to_bid=allow_to_bid
+
+        item_data = {'item': None}
         db = DB_Helper()
         sql = ("SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date "
                "FROM Item "
@@ -73,8 +75,6 @@ class BidManager:
 
         results = cursor.fetchall()
 
-        item_data = {}
-
         for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
             item_data['item'] = [ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status,
                                  Current_Bid.decode(), Bid_Count, Start_Date, End_Date]
@@ -83,7 +83,7 @@ class BidManager:
         self.item['expected-bid'] = float(item_data['item'][6])
 
         db.disconnect(commit=True)
-        return render_template("ItemForm.html", item_data=item_data)
+        return render_template("ItemForm.html", item_data=item_data, bid_allowed=allow_to_bid)
 
     def get_top_popular(self, limit=1):
         db = DB_Helper()

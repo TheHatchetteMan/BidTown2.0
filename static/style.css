@@ -23,11 +23,12 @@ html {
 /*========================================================*/
 a {
     text-align: center;
+    text-decoration: none;
+    color: #000;
 }
 a:visited,
 a:link{
     text-decoration: none;
-/*    color: #000;  DEPRICATED - inherit color from context of parent container */
 }
 
 body { 

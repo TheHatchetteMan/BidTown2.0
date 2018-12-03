@@ -65,6 +65,7 @@ def CreateAccount():
         db.disconnect()
 
         return redirect('/Login')
+    # elif request.method == 'GET'
     return render_template('AccountCreation.html')
 
 
@@ -78,7 +79,8 @@ def Login():
 @app.route("/item/<int:ItemID>", methods=['GET'])  # testing
 def view_single_item(ItemID):
     if request.method == 'GET':
-        return bm.view_item(ItemID)
+        allow_to_bid = user.bid_allowed()
+        return bm.view_item(ItemID, allow_to_bid)
     return "Error fetching single item"
 
 

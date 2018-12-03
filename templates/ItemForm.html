@@ -14,6 +14,7 @@
     <p>{{ messages }}</p>
     {% endif %}
 
+    {% if bid_allowed %}
     <form action="/place-bid" method="post">
 	<ul>
         <h4>Please place a bid:</h4>
@@ -28,6 +29,9 @@
         <input type="submit" value="Submit">
     </ul>
     </form>
+    {% else %}
+    <p><a href="/CreateAccount">Sign up or Sign in as a buyer to bid!</a></p>
+    {% endif %}
 {% else %}
     <p>The item doesn't exist</p>
 {% endif %}
