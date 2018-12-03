@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect
+from flask import request, render_template, redirect, session
 from DB_Helper import DB_Helper
 
 
@@ -36,6 +36,9 @@ class BidManager:
         # if the user updates their bid, will the resulting bid amount be what they were expecting
         meets_expectation = (expected_bidcount == actual_bidcount) and (expected_bid_total == actual_bid_total)
 
+        if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
+            userid = {{session['bidtown_session_key'][0][0]}}
+
         if meets_expectation:
             sql = ("UPDATE Item "
                    "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1 "
@@ -47,11 +50,11 @@ class BidManager:
             db.disconnect()
 
             self.clear_item()
-            return redirect("/single-item/{id}".format(id=item_id))
+            return redirect("/item/{id}".format(id=item_id))
 
         self.clear_item()
         db.disconnect()
-        return redirect("/single-item/{id}".format(id=item_id))
+        return redirect("/item/{id}".format(id=item_id))
                                                                                                                
     def view_item(self, id):  # must be called before place_bid()
         db = DB_Helper()
