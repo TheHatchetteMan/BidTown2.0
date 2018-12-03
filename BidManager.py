@@ -37,11 +37,11 @@ class BidManager:
         meets_expectation = (expected_bidcount == actual_bidcount) and (expected_bid_total == actual_bid_total)
 
         if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
-            userid = {{session['bidtown_session_key'][0][0]}}
+            userid = session['bidtown_session_key'][0]
 
         if meets_expectation:
             sql = ("UPDATE Item "
-                   "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1 "
+                   "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1, Current_Highest_Bidder = userid "
                    f"WHERE ItemID = ? AND Bid_Count = {actual_bidcount} "
                    "AND Current_Bid < (Current_Bid + ?) "  # adding negative & zero amounts
                    )  # check bid count at database level
