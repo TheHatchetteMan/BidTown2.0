@@ -20,7 +20,12 @@
 			  <li class="span-1-of-6"><a class="btn nav-btn" href="/browse">Browse</a></li>
 			  <li class="span-1-of-6"><a class="btn nav-btn" href="/EndingSoon">Ending Soon</a></li>
 			  <li class="span-1-of-6"><a class="btn nav-btn" href="/TopSellers">Top Sellers</a></li>
-			  <li class="span-1-of-6"><a class="btn nav-btn btn-call-to-action" href="/CreateAccount">Sign up</a></li>
+
+				{% if not userLog %}
+			  	<li class="span-1-of-6"><a class="btn nav-btn btn-call-to-action" href="/CreateAccount">Sign up</a></li>
+				{% elif userLog %}
+				<li class="span-1-of-6"><a class="btn nav-btn btn-call-to-action" href="#">{{name}}</a></li>
+				{% endif %}
 
 				{% if userLog %}
 				<li class="span-1-of-6"><a class="btn nav-btn" href="#">Logout</a></li>

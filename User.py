@@ -44,6 +44,7 @@ class User:
 
     def set_session(self, user_data):
         session['bidtown_session_key'] = user_data['user']  # grant user access with session cookie
+        return session['bidtown_session_key']
 
     def is_buyer(self):
         return self.identity['type'] == 0
