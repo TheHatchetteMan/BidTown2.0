@@ -84,12 +84,11 @@ def Bid_Index():
 @app.route('/Dashboard')
 def Dashboard_Route():
     seller = None
-    session
     logged_in = None
 
     if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
-        if session['bidtown_session_key'[6]] == '1':
-            seller = True
+        Type = {{session['bidtown_session_key'][0][6]}}
+        seller = True
     else:
         seller = False
 
@@ -97,9 +96,6 @@ def Dashboard_Route():
         return render_template("SellerDashboard.html")
     else:
         return render_template("BuyerDashboard.html")
-
-    temp = 'bidtown_session_key'[0]
-    return render_template('SellerDashboard.html')
 
 
 # ----- Display The Seller Dashboard ----- #

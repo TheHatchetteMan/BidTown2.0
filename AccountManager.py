@@ -18,7 +18,7 @@ class AccountManager:
         db = DB_Helper()
 
         if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
-            userid = [{session['bidtown_session_key'][0][0]}]
+            userID = [{session['bidtown_session_key'][0][0]}]
 
         sql = ("SELECT i.ItemID, i.UserID, i.ClassID, "
                "i.Name, i.Image_Url, i.Status, "
@@ -28,8 +28,9 @@ class AccountManager:
                "FROM Item i, Users u "
                "WHERE u.UserID=i.UserID "
                "AND u.Type=1 AND i.Status='For_Sale' "
-               "AND i.UserID=2 "
+               "AND i.UserID = 2 "       
                "ORDER BY Bid_Count DESC LIMIT ?")
+        # Temporary hardcoded value to change later (f will be needed in front of UserID line
 
         data = (limit,)  # to satisfy execute method for prepared statement
 
@@ -49,8 +50,22 @@ class AccountManager:
         return item_list
 
     def view_sold_items(self, limit=1):
-        db = DB_Helper
-        sql = ()
+        db = DB_Helper()
+
+        if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
+            userID = [{session['bidtown_session_key'][0][0]}]
+
+        sql = ("SELECT i.ItemID, i.UserID, i.ClassID, "
+               "i.Name, i.Image_Url, i.Status, "
+               "i.Start_Bid, i.Current_Bid, i.Bid_Count, "
+               "i.Start_Date, i.End_Date, "
+               "u.FirstName, u.LastName, u.Location "
+               "FROM Item i, Users u "
+               "WHERE u.UserID=i.UserID "
+               "AND u.Type=1 AND i.Status='Sold' "
+               "AND i.UserID = 2 "
+               "ORDER BY Bid_Count DESC LIMIT ?")
+        # Temporary hardcoded value to change later (f will be needed in front of UserID line
 
         data = (limit,)  # to satisfy execute method for prepared statement
 
@@ -70,8 +85,23 @@ class AccountManager:
         return item_list
 
     def view_watching_items(self, limit=1):
-        db = DB_Helper
-        sql = ()
+        db = DB_Helper()
+
+        if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
+            userID = [{session['bidtown_session_key'][0][0]}]
+
+        sql = ("SELECT i.ItemID, i.UserID, i.ClassID, "
+               "i.Name, i.Image_Url, i.Status, "
+               "i.Start_Bid, i.Current_Bid, i.Bid_Count, "
+               "i.Start_Date, i.End_Date, "
+               "u.FirstName, u.LastName, u.Location "
+               "FROM Item i, Users u, Is_Watching w "
+               "WHERE u.UserID=i.UserID "
+               "AND u.UserID=w.UserID "
+               "AND u.Type=1 AND i.Status='For_Sale' "
+               "AND i.UserID = 2 "
+               "ORDER BY Bid_Count DESC LIMIT ?")
+        # Temporary hardcoded value to change later (f will be needed in front of UserID line
 
         data = (limit,)  # to satisfy execute method for prepared statement
 
@@ -91,8 +121,22 @@ class AccountManager:
         return item_list
 
     def view_bought_items(self, limit=1):
-        db = DB_Helper
-        sql = ()
+        db = DB_Helper()
+
+        if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
+            userID = [{session['bidtown_session_key'][0][0]}]
+
+        sql = ("SELECT i.ItemID, i.UserID, i.ClassID, "
+               "i.Name, i.Image_Url, i.Status, "
+               "i.Start_Bid, i.Current_Bid, i.Bid_Count, "
+               "i.Start_Date, i.End_Date, "
+               "u.FirstName, u.LastName, u.Location "
+               "FROM Item i, Users u, Transactions t "
+               "WHERE u.UserID=i.UserID "
+               "AND u.Type=1 AND i.Status='For_Sale' "
+               "AND t.UserID2 = 2 "
+               "ORDER BY Bid_Count DESC LIMIT ?")
+        # Temporary hardcoded value to change later (f will be needed in front of UserID line
 
         data = (limit,)  # to satisfy execute method for prepared statement
 
@@ -112,8 +156,22 @@ class AccountManager:
         return item_list
 
     def view_bid_items(self, limit=1):
-        db = DB_Helper
-        sql = ()
+        db = DB_Helper()
+
+        if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
+            userID = [{session['bidtown_session_key'][0][0]}]
+
+        sql = ("SELECT i.ItemID, i.UserID, i.ClassID, "
+               "i.Name, i.Image_Url, i.Status, "
+               "i.Start_Bid, i.Current_Bid, i.Bid_Count, "
+               "i.Start_Date, i.End_Date, "
+               "u.FirstName, u.LastName, u.Location "
+               "FROM Item i, Users u "
+               "WHERE u.UserID=i.UserID "
+               "AND u.Type=1 AND i.Status='For_Sale' "
+               "AND i.Current_Highest_Bidder = 2 "
+               "ORDER BY Bid_Count DESC LIMIT ?")
+        # Temporary hardcoded value to change later (f will be needed in front of UserID line
 
         data = (limit,)  # to satisfy execute method for prepared statement
 
@@ -132,7 +190,3 @@ class AccountManager:
         db.disconnect()
         return item_list
 
-    def get_current_user(self):
-        db = DB_Helper
-        userID = {{session['bidtown_session_key'][0][0]}}
-        return userID

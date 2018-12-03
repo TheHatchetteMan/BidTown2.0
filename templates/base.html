@@ -25,6 +25,9 @@
 				{% if userLog %}
 				<li class="span-1-of-6"><a class="btn nav-btn" href="#">Logout</a></li>
                 <li class="span-1-of-6"><a class="btn nav-btn" href="/Dashboard">Account</a></li>
+                <li class="span-1-of-6"><a class="btn nav-btn" href="/SellerDashboard">Seller Dashboard</a></li>
+                <li class="span-1-of-6"><a class="btn nav-btn" href="/BuyerDashboard">Buyer Dashboard</a></li>
+                <!-- Explicit creation of Buyer and Seller Dashboard buttons is temporary for testing -->
                 {% elif not userLog %}
 				<li class="span-1-of-6"><a class="btn nav-btn" href="/Login">Login</a></li>
 				{% endif %}
