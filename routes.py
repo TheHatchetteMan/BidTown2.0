@@ -49,8 +49,7 @@ def Ending_Soon():
 @app.route('/ActiveIndex')
 def Active_Index():
     item_list = am.view_active_items(50)
-    userid = am.get_current_user()
-    return render_template("ActiveIndex.html", userid, item_list=item_list)
+    return render_template("ActiveIndex.html", item_list=item_list)
 
 
 # ----- Display Seller's Sold Items ----- #
