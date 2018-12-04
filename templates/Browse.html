@@ -42,25 +42,32 @@
     <ul id="filter-results-by-class">
     {% for item in item_list %}
     <div class="result">
-        <div class="row">
-            <li>    
-                <a href="/item/{{ item[0] }}">
-                <div class="col span-1-of-3">
-                <label for="{{item[2]}}">{{ item[2] }}</label><br/>
-                <img id="{{item[3]}}" src="{{item[3]}}" width="15%" height="25%"/>
-                </div>
-
-                <div class="col span-1-of-3">
-                <h6>Description</h6>
-                    <p>{{item[11]}}</p>
-                </div>
-
-                <div class="col span-1-of-3">
-                <p>Current Bid: ${{item[6]}}</p>
-                </div>
-                </a>
-            </li>
+    <div class="row">
+	   <li>    
+        <a href="/item/{{ item[0] }}">
+        <div class="col span-1-of-3">
+            <label for="{{item[2]}}">{{ item[2] }}</label><br/>
+            <img id="{{item[2]}}" src="{{item[3]}}" width="30%" height="35%"/>
         </div>
+
+        <div class="col span-1-of-3">
+            <h6>Description</h6>
+            <ul>
+                <li>{{item[11]}}</li>
+            </ul>
+        </div>
+        
+        <div class="col span-1-of-3">
+            <ul>
+                <li>Current Bid: ${{item[5]}}</li>
+                <li>Ends: {{item[8]}}</li>
+                <li>bids: {{item[6]}}</li>
+                <li>seller: {{item[10]}} {{item[11]}}</li>
+            </ul>
+        </div>
+        </a>
+	   </li>
+    </div>
     </div>
     {% endfor %}
     </ul>

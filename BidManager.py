@@ -106,9 +106,9 @@ class BidManager:
 
         for (ItemID, UserID, Name, Image_Url, Status, Start_Bid, Current_Bid, Bid_Count, Start_Date, End_Date,
              FirstName, LastName, Location, Description) in results:
-            item_list['item'].append([ItemID, UserID, Name.decode(), Image_Url.decode(), Status, Start_Bid,
+            item_list['item'].append([ItemID, UserID, Name.decode(), Image_Url.decode(), Status.decode(), Start_Bid.decode(),
                                       Current_Bid.decode(), Bid_Count, Start_Date, End_Date, FirstName.decode(), LastName.decode(),
-                                      Location, Description.decode()])
+                                      Location.decode(), Description.decode()])
 
         db.disconnect()
         return item_list
