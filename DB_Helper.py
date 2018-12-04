@@ -1,9 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode
 
-#filepath = "/home/edwin/Documents/Software_Engineering/BidTown/db_cnxn"
-filepath = r'C:\Users\etwit\Documents\USC FALL 18\CSCI 540\BidTown\BidTown\mysqlconnection.txt.txt' #erin uncomment this
-# filepath = r'C:\Users\Hunter\BidTown\mysqlconnection.txt.txt'
+filepath = "/home/ubuntu/BidTown/db_cnxn"
 
 def read_mysql_config(filepath):
     '''
