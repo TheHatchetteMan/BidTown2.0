@@ -18,7 +18,7 @@ def show_logged_in():
     else:
         logged_in = False
 
-    return dict(userLog=logged_in)
+    return dict(userLog=logged_in, name=user.get_name(1))
 
 
 #  ------------------------------------- HOME -------------------------------------  #
@@ -186,7 +186,7 @@ def signin():
     user_exists = len(user_data['user']) == 1
 
     if user_exists:
-        user.set_session(user_data)  # allow session
+        info = user.set_session(user_data)  # allow session
         return redirect('/HomePage')
     return render_template("LoginForm.html", Logged_In=user_exists) + "Failed Login"
 
