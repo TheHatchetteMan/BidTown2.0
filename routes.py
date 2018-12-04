@@ -10,13 +10,15 @@ user = User()
 
 @app.context_processor
 def show_logged_in():
+    session
     logged_in = None
 
     if 'bidtown_session_key' in session and len(session['bidtown_session_key']) > 0:
         logged_in = True
     else:
         logged_in = False
-    return dict(userLog=logged_in, name=user.get_name(1))
+
+    return dict(userLog=logged_in)
 
 
 #  ------------------------------------- HOME -------------------------------------  #
@@ -104,11 +106,11 @@ def filter():
     attributes = []
 
     if request.method == "GET" and request.args['Class'] is not None:
-        sql = ('SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, '
-               'I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType '
-               'FROM Item I, Class C '
+        sql = ('SELECT I.ItemID, I.UserID, I.Name, I.Image_Url, I.Status, '
+               'I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType, I.Description '
+               f'FROM Item I, Class C, {Class} CT '
                f'WHERE C.ClassType = "{Class}" '
-               'AND  I.Status = "For_Sale" AND I.ClassID = C.ClassID ')
+               'AND  I.Status = "For_Sale" AND I.ItemID = CT.ItemID ')
 
         empty_tuple = ()
 
@@ -117,8 +119,10 @@ def filter():
 
         results = cursor.fetchall()
 
-        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID, ClassType) in results:
-            item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status.decode(), Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode()])
+        for (ItemID, UserID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID,
+             ClassType, Description) in results:
+            item_list['item'].append([ItemID, UserID, Name.decode(), Image_Url.decode(), Status.decode(),
+                                      Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode(), Description.decode()])
 
         cursor.close()  # clear cursor but keep db connection
 
@@ -150,11 +154,11 @@ def filter():
 
         no_data = ()
 
-        sql = ("SELECT I.ItemID, I.UserID, I.ClassID, I.Name, I.Image_Url, I.Status, "
+        sql = ("SELECT I.ItemID, I.UserID, I.Name, I.Image_Url, I.Status, "
                "I.Current_Bid, I.Bid_Count, I.Start_Date, I.End_Date, C.ClassID, C.ClassType "
                f"FROM Item I, Class C, {Class} CT "
                f"WHERE C.ClassType = '{Class}' "
-               "AND I.Status = 'For_Sale' AND I.ClassID = C.ClassID AND C.ClassID=CT.ClassID "
+               "AND I.Status = 'For_Sale' AND I.ItemID = CT.ItemID AND C.ClassID=CT.ClassID "
                f"{attr_str}")
 
         cursor = db.connection.cursor(prepared=True)
@@ -163,8 +167,8 @@ def filter():
 
         item_list['item'] = []
 
-        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID, ClassType) in results:
-            item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode()])
+        for (ItemID, UserID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date, ClassID, ClassType) in results:
+            item_list['item'].append([ItemID, UserID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count, Start_Date, End_Date, ClassID, ClassType.decode()])
 
     db.disconnect()
     return render_template('Browse.html', item_list=item_list['item'], ClassType=Class, attributes=attributes)
@@ -182,7 +186,7 @@ def signin():
     user_exists = len(user_data['user']) == 1
 
     if user_exists:
-        info = user.set_session(user_data)  # allow session
+        user.set_session(user_data)  # allow session
         return redirect('/HomePage')
     return render_template("LoginForm.html", Logged_In=user_exists) + "Failed Login"
 

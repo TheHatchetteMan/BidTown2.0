@@ -66,7 +66,7 @@ class BidManager:
 
         item_data = {'item': None}
         db = DB_Helper()
-        sql = ("SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date "
+        sql = ("SELECT ItemID, UserID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date "
                "FROM Item "
                "WHERE ItemID=?")
         data = (id,)  # for prepared statement functionality. not sure if this is required.
@@ -75,23 +75,23 @@ class BidManager:
 
         results = cursor.fetchall()
 
-        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
-            item_data['item'] = [ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status,
+        for (ItemID, UserID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
+            item_data['item'] = [ItemID, UserID, Name.decode(), Image_Url.decode(), Status,
                                  Current_Bid.decode(), Bid_Count, Start_Date, End_Date]
 
-        self.item['expected-bidcount'] = item_data['item'][7]  # user expectation set here and must be captured
-        self.item['expected-bid'] = float(item_data['item'][6])
+        self.item['expected-bidcount'] = item_data['item'][6]  # user expectation set here and must be captured
+        self.item['expected-bid'] = float(item_data['item'][5])
 
         db.disconnect(commit=True)
         return render_template("ItemForm.html", item_data=item_data, bid_allowed=allow_to_bid)
 
     def get_top_popular(self, limit=1):
         db = DB_Helper()
-        sql = ("SELECT i.ItemID, i.UserID, i.ClassID, "
+        sql = ("SELECT i.ItemID, i.UserID, "
                "i.Name, i.Image_Url, i.Status, "
                "i.Start_Bid, i.Current_Bid, i.Bid_Count, "
                "i.Start_Date, i.End_Date, "
-               "u.FirstName, u.LastName, u.Location "
+               "u.FirstName, u.LastName, u.Location, i.Description "
                "FROM Item i, Users u "
                "WHERE u.UserID=i.UserID "
                "AND u.Type=1 AND i.Status='For_Sale' "
@@ -105,18 +105,18 @@ class BidManager:
 
         item_list = {'item': []}
 
-        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Start_Bid, Current_Bid, Bid_Count, Start_Date, End_Date,
-             FirstName, LastName, Location) in results:
-            item_list['item'].append([ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Start_Bid,
-                                      Current_Bid.decode(), Bid_Count, Start_Date, End_Date, FirstName, LastName,
-                                      Location])
+        for (ItemID, UserID, Name, Image_Url, Status, Start_Bid, Current_Bid, Bid_Count, Start_Date, End_Date,
+             FirstName, LastName, Location, Description) in results:
+            item_list['item'].append([ItemID, UserID, Name.decode(), Image_Url.decode(), Status, Start_Bid,
+                                      Current_Bid.decode(), Bid_Count, Start_Date, End_Date, FirstName.decode(), LastName.decode(),
+                                      Location, Description.decode()])
 
         db.disconnect()
         return item_list
 
     def get_ending_soon(self, limit=1):
         db = DB_Helper()
-        sql = ('SELECT ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date '
+        sql = ('SELECT ItemID, UserID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date '
                'FROM Item WHERE Status = "For_Sale" ORDER BY End_Date LIMIT ?')
 
         data = (limit,)  # to satisfy execute method for prepared statement
@@ -127,9 +127,9 @@ class BidManager:
 
         item_list = {'item': []}
 
-        for (ItemID, UserID, ClassID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
+        for (ItemID, UserID, Name, Image_Url, Status, Current_Bid, Bid_Count, Start_Date, End_Date) in results:
             item_list['item'].append(
-                [ItemID, UserID, ClassID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count,
+                [ItemID, UserID, Name.decode(), Image_Url.decode(), Status, Current_Bid.decode(), Bid_Count,
                  Start_Date, End_Date])
 
         db.disconnect()

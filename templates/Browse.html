@@ -26,7 +26,7 @@
 <label for="attributes">attributes:</label>
 <form class="filter-by-attributes" id="attributes"action="/filter" method="get">
     <input type="hidden" id="{{ClassType}}" name="Class" value="{{ClassType}}">
-    {% for x in range(2, attributes|length) %}
+    {% for x in range(3, attributes|length) %}
     <label for="{{ attributes[x] }}">{{ attributes[x] }}</label>
     <input type="checkbox" id="{{ attributes[x] }}" name="{{ x-2 }}"  value="{{attributes[x]}}"/>
     {% endfor %}
@@ -46,12 +46,13 @@
             <li>    
                 <a href="/item/{{ item[0] }}">
                 <div class="col span-1-of-3">
-                <label for="{{item[3]}}">{{ item[3] }}</label><br/>
-                <img id="{{item[3]}}" src="{{item[4]}}" width="15%" height="25%"/>
+                <label for="{{item[2]}}">{{ item[2] }}</label><br/>
+                <img id="{{item[3]}}" src="{{item[3]}}" width="15%" height="25%"/>
                 </div>
 
                 <div class="col span-1-of-3">
                 <h6>Description</h6>
+                    <p>{{item[11]}}</p>
                 </div>
 
                 <div class="col span-1-of-3">

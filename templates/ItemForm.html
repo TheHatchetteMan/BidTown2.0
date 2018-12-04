@@ -6,8 +6,8 @@
 {% extends "base.html" %}
 {% block content %}
 {% if item_data|length != 0 %}
-    <h1>{{ item_data['item'][3] }}</h1><br>
-    <img src="{{item_data['item'][4]}}"
+    <h1>{{ item_data['item'][2] }}</h1><br>
+    <img src="{{item_data['item'][3]}}"
          width="50%" height="50%"><img><br>
     <p>Current Bid: ${{item_data['item'][6]}}</p>
     {% if messages|length != 0  %}
