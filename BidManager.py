@@ -47,7 +47,7 @@ class BidManager:
                    "AND Current_Bid < (Current_Bid + ?) "  # adding negative & zero amounts
                    )  # check bid count at database level
             update = db.connection.cursor(prepared=True)
-            update.execute(sql, (bid_increment, item_id, expected_bidcount,))
+            update.execute(sql, (bid_increment, item_id, bid_increment,))
             db.disconnect()
 
             self.clear_item()
