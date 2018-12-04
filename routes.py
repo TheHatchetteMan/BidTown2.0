@@ -210,6 +210,7 @@ def list_item():
             item_description = request.form['description']
             item_weight = request.form['weight']
             item_age = request.form['age']
+            item_type = request.form['type']
 
             db = DB_Helper()
             sql = ("INSERT INTO Item(UserID, Name, Image_Url, Status, Start_Bid, Current_Bid, Bid_Count, "
@@ -224,6 +225,7 @@ def list_item():
 
             cursor = db.connection.cursor(prepared=True)
             cursor.execute(sql, empty_tuple)
+            cursor.close()
             db.disconnect()
 
     return render_template("Sell_Item.html")

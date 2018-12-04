@@ -20,7 +20,6 @@ class BidManager:
         userid = None
 
         is_buyer = self.get_user_type() is "buyer"
-        userid = self.get_user_id()  # if userid == -1 at run time, get_user_id failed to get session info
 
         db = DB_Helper()
         # check that bid expectation is what will actually happen AKA recheck for actual bid and bid count match
@@ -40,7 +39,7 @@ class BidManager:
         meets_expectation = (expected_bidcount == actual_bidcount) \
                             and (expected_bid_total == actual_bid_total) and \
                             is_buyer
-
+        userid = self.get_user_id()  # if userid == -1 at run time, get_user_id failed to get session info
         if meets_expectation:
             sql = ("UPDATE Item "
                    "SET Current_Bid = Current_Bid + ?, Bid_Count = Bid_Count + 1, Current_Highest_Bidder = userid "
