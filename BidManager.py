@@ -61,7 +61,7 @@ class BidManager:
         self.item['expected-bidcount'] = None
         self.item['expected-bid'] = None
 
-        allow_to_bid=allow_to_bid
+        allow_to_bid = allow_to_bid
 
         item_data = {'item': None}
         db = DB_Helper()

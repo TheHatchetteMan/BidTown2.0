@@ -85,7 +85,7 @@ class User:
         return -1
 
     def bid_allowed(self):
-        return self.is_logged_in() and self.is_buyer()
+        return self.is_buyer()
 
     def clear_identity(self):
         self.identity = {'user_id': None, 'email': None, 'fn': None, 'ln': None, 'location': None, 'type': None}
