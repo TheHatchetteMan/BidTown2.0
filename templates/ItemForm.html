@@ -14,7 +14,8 @@
     <p>{{ messages }}</p>
     {% endif %}
 
-    {% if bid_allowed %}
+
+    {% if not bid_allowed %}
     <form action="/place-bid" method="post">
 	<ul>
         <h4>Please place a bid:</h4>

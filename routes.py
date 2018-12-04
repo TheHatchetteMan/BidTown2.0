@@ -229,3 +229,7 @@ def list_item():
             db.disconnect()
 
     return render_template("Sell_Item.html")
+#  ------------------------------------- CREATE ITEM -------------------------------------  #
+@app.route('/AccountDash')
+def AccountDash():
+    return render_template("AccountDashboard.html")
