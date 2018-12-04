@@ -4,9 +4,9 @@
 {% block content %}
     <h1>Sell</h1>
 
-    <form action="/Register-Item" method="post">
+    <form action='/ListItem' method="POST">
 	<ul>
-        <h4>List a Pet For Sale:</h4>
+        <h4>List an Animal For Sale:</h4>
         Name:<br>
         <input type="text" name="name">
         <br>
@@ -16,11 +16,17 @@
         Starting Bid: (specify the price you want it to start at)<br>
         <input type="number" name="start_bid">
         <br>
-        Description: (Please describe the item for buyers)<br>
-        <input type="text" name="description">
+        Starting Date: (Please enter start date)<br>
+        <input type ="date" name = "start_date">
+        <br>
+        End Date: (Please enter end date)<br>
+        <input type ="date" name = "end_date">
         <br>
         Location:<br>
         <input type="text" name="location">
+        <br>
+         Description: (Please describe the item for buyers)<br>
+        <input type="text" name="description">
         <br>
         Weight:<br>
         <input type="number" name="weight">

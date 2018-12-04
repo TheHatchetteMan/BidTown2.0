@@ -193,3 +193,37 @@ def signin():
 @app.route('/Logout')
 def logout():
     return user.logout()
+
+#  ------------------------------------- CREATE ITEM -------------------------------------  #
+@app.route('/ListItem', methods=['POST', 'GET'])
+def list_item():
+    if 'bidtown_session_key' in session and session['bidtown_session_key'] is not None:
+
+        if request.method == 'POST':
+            item_userid= user.get_user_id()
+            item_name = request.form['name']
+            item_image = request.form['url']
+            item_startbid = request.form['start_bid']
+            item_startdate = request.form['start_date']
+            item_enddate = request.form['end_date']
+            item_location = request.form['location']
+            item_description = request.form['description']
+            item_weight = request.form['weight']
+            item_age = request.form['age']
+
+            db = DB_Helper()
+            sql = ("INSERT INTO Item(UserID, Name, Image_Url, Status, Start_Bid, Current_Bid, Bid_Count, "
+                   "Start_Date, End_Date, "
+                   "Location, Description, Weight, Age) "
+                   f"VALUES({item_userid}, '{item_name}', '{item_image}', 'For_Sale', {item_startbid}, "
+                   f"{item_startbid}, 1, '{item_startdate}', "
+                   f"'{item_enddate}', '{item_location}', '{item_description}', "
+                   f"{item_weight}, {item_age})")
+
+            empty_tuple = ()
+
+            cursor = db.connection.cursor(prepared=True)
+            cursor.execute(sql, empty_tuple)
+            db.disconnect()
+
+    return render_template("Sell_Item.html")
