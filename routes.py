@@ -1,8 +1,10 @@
-from app_config import app
+from app_config import create_app
 from flask import render_template, request, redirect, session
 from DB_Helper import DB_Helper
 from BidManager import BidManager
 from User import User
+
+app = create_app()
 
 #  common objects & data
 bm = BidManager()
