@@ -42,5 +42,5 @@ def create_app(test_config=None):
     return app
 
 app = create_app()
-
-app.secret_key = os.urandom(8)
+SECRET_KEY = os.urandom(8)
+# app.secret_key = os.urandom(8)
